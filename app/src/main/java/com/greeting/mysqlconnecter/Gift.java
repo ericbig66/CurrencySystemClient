@@ -2,7 +2,6 @@ package com.greeting.mysqlconnecter;
 
         import androidx.appcompat.app.AppCompatActivity;
 
-        import android.content.Intent;
         import android.graphics.Bitmap;
         import android.os.Bundle;
         import android.view.View;
@@ -33,7 +32,7 @@ public class Gift extends AppCompatActivity {
     public void getCode(View v) {
         BarcodeEncoder encoder = new BarcodeEncoder();
         try{
-            Bitmap bit = encoder.encodeBitmap(amount.getText().toString()
+            Bitmap bit = encoder.encodeBitmap(Login.acc+ "zpek,"+amount.getText().toString()
                     , BarcodeFormat.QR_CODE,300,300);
             qrCode.setImageBitmap(bit);
         }catch (WriterException e){
