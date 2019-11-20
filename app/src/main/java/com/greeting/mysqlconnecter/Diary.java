@@ -46,7 +46,7 @@ public class Diary extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        acc = intent.getStringExtra("acc");
+        acc = Login.acc;
         setContentView(R.layout.layout_diary);
         //dt = findViewById(R.id.detail);
         tradeData = findViewById(R.id.tradeData);
