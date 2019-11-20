@@ -50,7 +50,7 @@ public class Purchase extends AppCompatActivity {
 
     //取得相機使用權
     public void getPromissionCamera(){
-        Toast.makeText(Purchase.this,"取得權限中...",Toast.LENGTH_LONG).show();
+
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
         }
@@ -87,7 +87,7 @@ public class Purchase extends AppCompatActivity {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
 
-
+                Toast.makeText(Purchase.this,"取得權限中...",Toast.LENGTH_LONG).show();
                 if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
                     recreate();
                     return;
