@@ -33,7 +33,7 @@ public class Purchase extends AppCompatActivity {
     SurfaceView surfaceView;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
-    String data="", tmp="", pay, qdata="";//掃描到的資料
+    String data="", tmp="", pay, qdata="", sql="";//掃描到的資料
     final String acc=Login.acc;
     boolean trade;
     int amount;
@@ -62,7 +62,15 @@ public class Purchase extends AppCompatActivity {
             String[] splited = qdata.split("zpek,");
             pay = splited[0];//付款方
             amount = Integer.parseInt(splited[1]);//實際發生金額
-        }else{
+            sql ="{call tradeR(?,?,?,?)}";
+        }
+        else if(qdata.contains("cj/1l,")){
+            String[] splited = qdata.split("cj/1l,");
+            pay = splited[0];//付款方
+            amount = Integer.parseInt(splited[1]);//實際發生金額
+            sql = "{call tradeV(?,?,?,?)}";
+        }
+        else{
             pay = "QRERR";
             amount = 0;
         }
@@ -153,7 +161,7 @@ public class Purchase extends AppCompatActivity {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, user, pass);
                 //建立查詢==>交易
-                CallableStatement cstmt = con.prepareCall("{call tradeR(?,?,?,?)}");
+                CallableStatement cstmt = con.prepareCall(sql);
                 cstmt.setString(1,pay);//設定輸入變數(參數位置,輸入值)
 //                Log.v("test","pay"+pay);
                 cstmt.setInt(2,amount);
