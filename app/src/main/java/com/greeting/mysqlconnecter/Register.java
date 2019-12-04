@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.mikhaellopez.circularimageview.CircularImageView;
+
 import java.io.ByteArrayOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -38,6 +41,8 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.xml.transform.Result;
 
 
 public class Register extends AppCompatActivity {
@@ -51,6 +56,9 @@ public class Register extends AppCompatActivity {
     RadioButton m, f;
     Button pic, reg, login, clr;
     DatePicker dtp;
+    CircularImageView profile;
+    Bitmap dataToConvert;
+    String b64="";
 //    LinearLayout df;
     //系統時間及格式設定
     Date curDate = new Date(System.currentTimeMillis()) ;//取得系統時間
@@ -81,6 +89,8 @@ public class Register extends AppCompatActivity {
         GEN = "";
         PWD = "";
         BD="";
+        b64="";
+        profile.setVisibility(View.GONE);
         dtp.init(Integer.parseInt(yyyy), Integer.parseInt(mm), Integer.parseInt(dd), null);
         f.setChecked(false);
         m.setChecked(false);
@@ -108,6 +118,7 @@ public class Register extends AppCompatActivity {
         err = PWD.trim().isEmpty()?err+="密碼,":err;
         err = CHKPWD.trim().isEmpty()?err+="確認密碼,":err;
         err = EM.trim().isEmpty()?err+="E-mail,":err;
+        err = b64.trim().isEmpty()?err+="上傳頭像,":err;
         err = err.isEmpty()?err:err.substring(0, err.length() - 1);
         if(!err.isEmpty()){err+=" 為必填項目\n請確認是否已填寫!";}
         haveError = !err.isEmpty();
@@ -133,6 +144,7 @@ public class Register extends AppCompatActivity {
         }
     }
 
+    //初始化程式
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,15 +165,13 @@ public class Register extends AppCompatActivity {
         login = findViewById(R.id.login);
         clr = findViewById(R.id.clr);
 
+        profile = findViewById(R.id.profile);
+
         dtp = findViewById(R.id.dtp);
 
         dtp.setMaxDate(new Date().getTime());
 
-
         pic.setOnClickListener(v -> picOpen());
-
-
-
 
         login.setOnClickListener(v -> swlogin());
 
@@ -219,7 +229,7 @@ public class Register extends AppCompatActivity {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, user, pass);
                 String result ="";
-                CallableStatement cstmt = con.prepareCall("{call register(?,?,?,?,?,?,?,?)}");
+                CallableStatement cstmt = con.prepareCall("{call register(?,?,?,?,?,?,?,?,?)}");
                 cstmt.setString(1, FN);
                 cstmt.setString(2, LN);
                 cstmt.setString(3, EM);
@@ -227,6 +237,7 @@ public class Register extends AppCompatActivity {
                 cstmt.setString(5, BD);
                 cstmt.setString(6, AD);
                 cstmt.setString(7, GEN);
+                cstmt.setString(9, b64);
                 cstmt.registerOutParameter(8,Types.VARCHAR);
                 cstmt.executeUpdate();
                 return cstmt.getString(8);
@@ -254,45 +265,87 @@ public class Register extends AppCompatActivity {
 
     }
     //********************************************************************************************
+
+
+
     //開啟頭像
     public void picOpen(){
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, OPEN_PIC);
+        startActivityForResult(Intent.createChooser(intent,"請選擇您的頭像"), OPEN_PIC);
     }
-    //取得圖片路徑
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        Toast.makeText(Register.this, "hi!",Toast.LENGTH_SHORT).show();
-        if(requestCode == OPEN_PIC && RESULT_OK == resultCode){
-            Uri uri = data.getData();
-            try{
-                String[] projection = {MediaStore.Images.Media.DATA};
-                CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
-                Cursor cursor = cursorLoader.loadInBackground();
-                int colum_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
+        if(requestCode == OPEN_PIC && resultCode == RESULT_OK){
+            Uri imgdata = data.getData();
+            profile.setImageURI(imgdata);
+            profile.setVisibility(View.VISIBLE);
+            dataToConvert = ((BitmapDrawable)profile.getDrawable()).getBitmap();
+            ConvertToBase64 convertToBase64 = new ConvertToBase64();
+            convertToBase64.execute("");
+        }
 
-                String path = cursor.getString(colum_index);
-                encode(path);
+    }
 
-            }catch (Exception e){
-                Toast.makeText(Register.this,e.toString(),Toast.LENGTH_LONG).show();
-            }
+    //將圖片轉換為Base64字串
+    private class ConvertToBase64 extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(Register.this,"請稍後...",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            dataToConvert.compress(Bitmap.CompressFormat.JPEG, 30, baos);
+            byte[] imageBytes = baos.toByteArray();
+            String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+            return imageString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            b64 = s;
         }
     }
+
+    //    //取得圖片路徑
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+////        Toast.makeText(Register.this, "hi!",Toast.LENGTH_SHORT).show();
+//        if(requestCode == OPEN_PIC && RESULT_OK == resultCode){
+//            Uri uri = data.getData();
+//            try{
+//                String[] projection = {MediaStore.Images.Media.DATA};
+//                CursorLoader cursorLoader = new CursorLoader(this, uri, projection, null, null, null);
+//                Cursor cursor = cursorLoader.loadInBackground();
+//                int colum_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//                cursor.moveToFirst();
+//
+//                String path = cursor.getString(colum_index);
+//                encode(path);
+//
+//            }catch (Exception e){
+//                Toast.makeText(Register.this,e.toString(),Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
     //將圖片編碼為base64
-    private void encode(String path){
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        ByteArrayOutputStream boas = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, boas);
-        byte[] bytes = new  byte[100];//???????????
-        byte[] encode = Base64.encode(bytes,Base64.DEFAULT);
-        String encodeString = new String(encode);
-        Toast.makeText(Register.this, encodeString, Toast.LENGTH_LONG).show();
-    }
+//    private void encode(String path){
+//        Bitmap bitmap = BitmapFactory.decodeFile(path);
+//        ByteArrayOutputStream boas = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, boas);
+//        byte[] bytes = new  byte[100];//???????????
+//        byte[] encode = Base64.encode(bytes,Base64.DEFAULT);
+//        String encodeString = new String(encode);
+//        Toast.makeText(Register.this, encodeString, Toast.LENGTH_LONG).show();
+//    }
 
 }
 

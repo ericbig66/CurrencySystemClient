@@ -38,7 +38,7 @@ public class Diary extends AppCompatActivity {
 
 
     String acc;
-    TextView dt;
+//    TextView dt;
     TableLayout tradeData;
 
 
