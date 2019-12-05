@@ -20,6 +20,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.Layout;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -54,7 +55,7 @@ public class Register extends AppCompatActivity {
 
     EditText ln, fn, em, bd, ad, pwd, chkpwd;
     RadioButton m, f;
-    Button pic, reg, login, clr;
+    Button pic, reg, login, clr, btn;
     DatePicker dtp;
     CircularImageView profile;
     Bitmap dataToConvert;
@@ -200,6 +201,9 @@ public class Register extends AppCompatActivity {
             verify();
         });
 
+        btn = findViewById(R.id.button2);
+
+
         clr.setOnClickListener(v -> clear());
         f.setOnCheckedChangeListener((buttonView, isChecked) -> {
             closekeybord();
@@ -210,6 +214,18 @@ public class Register extends AppCompatActivity {
             closekeybord();
             if(isChecked){GEN = "m";}
         });
+
+
+
+        btn.setOnClickListener(v -> {
+                rotate();
+        });
+    }
+
+    Float degree = 0f;
+    public void rotate(){
+        degree=(degree+90f)>=(360f)?0f:degree+90f;
+        profile.setRotation(degree);
     }
 
     private class ConnectMySql extends AsyncTask<String, Void, String> {
@@ -229,7 +245,7 @@ public class Register extends AppCompatActivity {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, user, pass);
                 String result ="";
-                CallableStatement cstmt = con.prepareCall("{call register(?,?,?,?,?,?,?,?,?)}");
+                CallableStatement cstmt = con.prepareCall("{call register(?,?,?,?,?,?,?,?,?,?)}");
                 cstmt.setString(1, FN);
                 cstmt.setString(2, LN);
                 cstmt.setString(3, EM);
@@ -238,6 +254,7 @@ public class Register extends AppCompatActivity {
                 cstmt.setString(6, AD);
                 cstmt.setString(7, GEN);
                 cstmt.setString(9, b64);
+                cstmt.setFloat(10,degree);
                 cstmt.registerOutParameter(8,Types.VARCHAR);
                 cstmt.executeUpdate();
                 return cstmt.getString(8);
@@ -253,6 +270,7 @@ public class Register extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
+            Log.v("test",result);
             if(result.equals("註冊成功!")){
                 clear();
                 swlogin();

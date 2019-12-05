@@ -4,14 +4,19 @@ package com.greeting.mysqlconnecter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Type;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,8 +32,11 @@ public class Login extends AppCompatActivity {
     private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     private static final String user = "currency";
     private static final String pass = "@SAclass";
-    public static String wcm;
-    public static String acc;
+    String pfs;//profile String
+    public static Bitmap pf;//profile picture
+    public static float pfr;//profile rotation
+    public static String wcm;//welcome message
+    public static String acc;//account
 
     Button btnFetch, btnClear, reg;
     TextView txtData;
@@ -87,6 +95,15 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    public void ConvertToBitmap(){
+        try{
+            byte[] imageBytes = Base64.decode(pfs, Base64.DEFAULT);
+            pf = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        }catch (Exception e){
+            Log.v("test","error = "+e.toString());
+        }
+
+    }
 
     //建立連接與查詢非同步作業
     private class ConnectMySql extends AsyncTask<String, Void, String> {
@@ -110,13 +127,18 @@ public class Login extends AppCompatActivity {
 //                ResultSet rs = st.executeQuery("call login(@fname, '"+account+"', '"+password+"'); select @fname;");
                 //experiment part start
                 //此處呼叫Stored procedure(call 函數名稱(?)==>問號數量代表輸出、輸入的變數數量)
-                CallableStatement cstmt = con.prepareCall("{call login(?,?,?,?,?)}");
+                CallableStatement cstmt = con.prepareCall("{call login(?,?,?,?,?,?,?)}");
                 cstmt.registerOutParameter(1, Types.VARCHAR);//設定輸出變數(參數位置,參數型別)
                 cstmt.registerOutParameter(2, Types.VARCHAR);
                 cstmt.registerOutParameter(3, Types.INTEGER);
                 cstmt.setString(4, account);//設定輸入變數(參數位置,輸入值)
                 cstmt.setString(5, password);
+                cstmt.registerOutParameter(6, Types.LONGVARCHAR);
+                cstmt.registerOutParameter(7, Types.FLOAT);
                 cstmt.executeUpdate();
+                pfs = cstmt.getString("propic");
+                pfr = cstmt.getFloat("degree");
+                ConvertToBitmap();
                 return cstmt.getString(1)+cstmt.getString(2)+"您好!\n目前您尚有$"+cstmt.getString(3);//回傳結果給onPostExecute==>取得輸出變數(位置)
                 //experiment part end
 //
@@ -142,6 +164,8 @@ public class Login extends AppCompatActivity {
                 data = result;
                 acc=account;
                 Toast.makeText(Login.this, "請稍後", Toast.LENGTH_SHORT).show();
+                Log.v("test",result);
+                pfs="";
                 swmenu();
             }
 

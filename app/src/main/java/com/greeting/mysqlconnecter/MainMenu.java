@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import java.util.Timer;
 public class MainMenu extends AppCompatActivity {
     TextView wmsg;
     Intent intent;
+    ImageView profile;
     final String acc = Login.acc;
     int obp = 0; //times of on back pressed
 
@@ -40,6 +42,7 @@ public class MainMenu extends AppCompatActivity {
             Login.acc ="";
             Intent intent = new Intent(MainMenu.this, Login.class);
             startActivity(intent);
+            Login.pf = null;
             finish();
         }
         else{
@@ -60,5 +63,14 @@ public class MainMenu extends AppCompatActivity {
         wmsg = findViewById(R.id.msg);
 //        wmsg.setText(msg);
         wmsg.setText(Login.wcm);
+        profile = findViewById(R.id.profile);
+        try {
+            profile.setImageBitmap(Login.pf);
+            profile.setRotation(Login.pfr);
+        }catch (Exception e){}
+
+
     }
+
+
 }
