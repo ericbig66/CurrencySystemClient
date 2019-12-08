@@ -2,33 +2,21 @@ package com.greeting.mysqlconnecter;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.content.CursorLoader;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.text.Layout;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -38,12 +26,9 @@ import java.io.ByteArrayOutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.xml.transform.Result;
 
 
 public class Register extends AppCompatActivity {
@@ -55,7 +40,7 @@ public class Register extends AppCompatActivity {
 
     EditText ln, fn, em, bd, ad, pwd, chkpwd;
     RadioButton m, f;
-    Button pic, reg, login, clr, btn;
+    Button pic, reg, login, clr, rotate;
     DatePicker dtp;
     CircularImageView profile;
     Bitmap dataToConvert;
@@ -95,6 +80,8 @@ public class Register extends AppCompatActivity {
         dtp.init(Integer.parseInt(yyyy), Integer.parseInt(mm), Integer.parseInt(dd), null);
         f.setChecked(false);
         m.setChecked(false);
+        rotate.setVisibility(View.GONE);
+
     }
     //切換回登入模式(被該按鈕呼叫)
     public void swlogin(){
@@ -150,6 +137,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_register);
+
         ln = findViewById(R.id.ln);
         fn = findViewById(R.id.fn);
         em = findViewById(R.id.em);
@@ -191,7 +179,7 @@ public class Register extends AppCompatActivity {
             DD = dtp.getDayOfMonth()>9?dtp.getDayOfMonth()+"": "0"+dtp.getDayOfMonth();
             bd.setText(dtp.getYear()+"/"+MM+"/"+DD);
             BD = bd.getText().toString();
-            //
+
             //系統時間格式化(原始以秒為單位)
             String today = formatter.format(curDate);//將今天的日期儲存為指定格式
 
@@ -201,7 +189,7 @@ public class Register extends AppCompatActivity {
             verify();
         });
 
-        btn = findViewById(R.id.button2);
+        rotate = findViewById(R.id.rotate);
 
 
         clr.setOnClickListener(v -> clear());
@@ -215,11 +203,79 @@ public class Register extends AppCompatActivity {
             if(isChecked){GEN = "m";}
         });
 
-
-
-        btn.setOnClickListener(v -> {
+        rotate.setOnClickListener(v -> {
                 rotate();
         });
+
+        for(int i =0 ; i<10 ; i++){
+            Log.v("test", "data["+i+"] = "+NewRegister.data[i]);
+        }
+
+        try{
+            if(NewRegister.data[9].equals("y")){autoFill();}
+        }catch (Exception e){}
+    }
+
+    public void autoFill(){ //自動輸入
+        String tmp;
+        //性別
+        try {
+            if(NewRegister.data[1].equals("m")){m.setChecked(true);}
+            else if(NewRegister.data[1].equals("f")){f.setChecked(true);}
+        }catch (Exception e){}
+
+        //姓名
+        tmp = NewRegister.data[2];
+        if(tmp.charAt(0)>=97 && tmp.charAt(0)<=122 || tmp.charAt(0)>=65 && tmp.charAt(0)<=89){
+            try{
+                String nm[]= new String[2];
+                nm = tmp.trim().split(" ");
+                fn.setText(nm[0]);
+                ln.setText(nm[1]);
+                Log.v("test","cut1");
+            }catch (Exception e){}
+        }else{
+//            Log.v("test","cut2");
+//            Log.v("test",tmp.substring(0,1));
+//            Log.v("test",tmp.substring(1));
+            ln.setText(tmp.substring(0,1));
+            fn.setText(tmp.substring(1));
+        }
+
+        //生日
+        tmp = NewRegister.data[3];
+        String birth[] = new String[3];
+        birth = tmp.split("/");
+        dtp.init(Integer.parseInt(birth[0]), Integer.parseInt(birth[1]), Integer.parseInt(birth[2]), null);
+
+        //E-mail
+        em.setText(NewRegister.data[4]);
+
+        //密碼
+        pwd.setText(NewRegister.data[5]);
+
+        //確認密碼
+        chkpwd.setText(NewRegister.data[6]);
+
+        //地址
+        ad.setText(NewRegister.data[7]);
+
+        //頭像
+        tmp = NewRegister.data[8];
+        String splitter[] = new String[2];
+        splitter = tmp.split(",");
+        Log.v("test","URI = "+splitter[0]);
+        Uri imgdata = Uri.parse(splitter[0]);
+        profile.setImageURI(imgdata);
+        profile.setVisibility(View.VISIBLE);
+        rotate.setVisibility(View.VISIBLE);
+        dataToConvert = ((BitmapDrawable)profile.getDrawable()).getBitmap();
+        ConvertToBase64 convertToBase64 = new ConvertToBase64();
+        convertToBase64.execute("");
+
+        //頭像角度
+        degree = Float.parseFloat(splitter[1]) -90f;
+        rotate();
     }
 
     Float degree = 0f;
@@ -270,7 +326,7 @@ public class Register extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(Register.this, result, Toast.LENGTH_SHORT).show();
-            Log.v("test",result);
+//            Log.v("test",result);
             if(result.equals("註冊成功!")){
                 clear();
                 swlogin();
@@ -288,6 +344,7 @@ public class Register extends AppCompatActivity {
 
     //開啟頭像
     public void picOpen(){
+        ((BitmapDrawable)profile.getDrawable()).getBitmap().recycle();//一定要做否則會當機
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -298,9 +355,11 @@ public class Register extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == OPEN_PIC && resultCode == RESULT_OK){
+
             Uri imgdata = data.getData();
             profile.setImageURI(imgdata);
             profile.setVisibility(View.VISIBLE);
+            rotate.setVisibility(View.VISIBLE);
             dataToConvert = ((BitmapDrawable)profile.getDrawable()).getBitmap();
             ConvertToBase64 convertToBase64 = new ConvertToBase64();
             convertToBase64.execute("");

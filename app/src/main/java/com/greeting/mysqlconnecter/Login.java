@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
 
 
     public void swreg(){  //切換註冊頁面
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, NewRegister.class);
         startActivity(intent);
     }
 

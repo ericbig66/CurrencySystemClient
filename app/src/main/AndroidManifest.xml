@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NewRegister"></activity>
         <activity android:name=".Diary" />
         <activity android:name=".MainMenu" />
         <activity android:name=".Purchase" />

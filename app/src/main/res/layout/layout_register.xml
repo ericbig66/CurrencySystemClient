@@ -250,12 +250,6 @@
                 app:civ_shadow_radius="10"
                 tools:srcCompat="@tools:sample/backgrounds/scenic[15]" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -276,6 +270,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="上傳頭像" />
+
+                <Button
+                    android:id="@+id/rotate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="旋轉頭像"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

@@ -12,4 +12,27 @@
     <string name="title_activity_market">market</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="greeting">您好，歡迎來到樂幣系統\n我是小樂\n我會帶著你一起進入樂幣世界\n請問我該如何稱呼您呢?</string>
+    <string name="nickname">您可以使用綽號喔!</string>
+    <string name="nickname_err">母湯喔!小頑皮告訴我你的綽號嘛!</string>
+    <string name="get_birthday">能告訴我妳的生日嗎?</string>
+    <string name="get_gender">方便告訴我你的性別嗎?</string>
+    <string name="get_name">能告訴我你叫什麼名子嗎?</string>
+    <string name="name_err">拜託嘛!人家想知道</string>
+    <string name="get_mail">請問您是否有電子信箱呢?</string>
+    <string name="mail">請輸入您的電子信箱</string>
+    <string name="acc">在此設定您的帳戶名稱</string>
+    <string name="rem_acc_nomail">這組是你的帳號:</string>
+    <string name="rem_acc">記得喔!電子信箱就是您的帳號</string>
+    <string name="acc_err">母湯喔!要先新建帳號才能管理樂幣呀!</string>
+    <string name="mail_err">抓到了!電子信箱的格式怪怪的</string>
+    <string name="get_pwd">設定一組密碼來保護樂幣吧!</string>
+    <string name="pwd_err">醬子不行喔!要設定密碼才能保證樂幣的安全</string>
+    <string name="cnf_pwd">為了保證了幣的安全能再告訴我一次密碼嗎?</string>
+    <string name="cnf_pwd_err">母湯喔!跟剛剛輸入的怎麼不一樣?\n如果剛剛打錯了，可以按下上一步回去修改</string>
+    <string name="get_address">能告訴我你住哪嗎?我能將商品送到家喔!</string>
+    <string name="get_profile">最後，我需要張你最好看的照片</string>
+    <string name="profile_err">拜託啦!給我一張你的照片</string>
+    <string name="success">接下來讓我們來確認一下\n這些資料正不正確\n如果有不正確\n請幫我修改一下\n如果資料都正確\n請按下註冊按鈕就完成囉!</string>
+
 </resources>
