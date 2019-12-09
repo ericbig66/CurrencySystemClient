@@ -4,12 +4,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.icu.text.MessagePattern;
 import android.net.Uri;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.renderscript.Type;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -22,6 +31,9 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NewRegister extends AppCompatActivity {
     public static String data[] = new String[10];
@@ -63,16 +75,26 @@ public class NewRegister extends AppCompatActivity {
         no.setChecked(true);
         haveMail = findViewById(R.id.haveMail);
         no.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            answer.setHint(R.string.acc);
-            build.setVisibility(View.VISIBLE);
-            accInf.setVisibility(View.GONE);
+            if(isChecked){
+                answer.setHint(R.string.acc);
+                accInf.setVisibility(View.GONE);
+                next.setEnabled(false);
+                if(!answer.getText().toString().trim().isEmpty()){
+                    build.setVisibility(View.VISIBLE);
+                }
+            }
+
         });
 
         yes.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            answer.setHint(R.string.mail);
-            build.setVisibility(View.GONE);
-            accInf.setText(R.string.rem_acc);
-            accInf.setVisibility(View.VISIBLE);
+            if(isChecked){
+                answer.setHint(R.string.mail);
+                build.setVisibility(View.GONE);
+                accInf.setText(R.string.rem_acc);
+                accInf.setVisibility(View.VISIBLE);
+                next.setEnabled(true);
+            }
+
         });
 
         build.setOnClickListener(v -> {
@@ -80,20 +102,34 @@ public class NewRegister extends AppCompatActivity {
             String tmp = accInf.getText().toString()+answer.getText().toString()+"@happy.coin";
             accInf.setText(tmp);
             accInf.setVisibility(View.VISIBLE);
+            next.setEnabled(true);
         });
 
         answer.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(counter == 4 && no.isChecked() && !answer.getText().toString().trim().isEmpty()){
-                    build.setVisibility(View.VISIBLE);
-                }
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(counter == 4 && no.isChecked() && !answer.getText().toString().trim().isEmpty()){
                     build.setVisibility(View.VISIBLE);
+                }else{
+                    build.setVisibility(View.GONE);
+                }
+
+                if(counter >=4 && counter<=6 /*&& !answer.getText().toString().trim().isEmpty()*/ ){
+                    Pattern ps = Pattern.compile("[\\u4e00-\\u9fa5]");
+                    Log.v("test","testing = "+answer.getText().toString());
+                    String tmp[] = answer.getText().toString().split("");
+                    for(int i=0 ; i<answer.getText().toString().length() ; i++){
+                        Matcher ms = ps.matcher(tmp[i]);
+                        if(ms.matches()){
+                            answer.setText("");
+                            if(no.isChecked()){accInf.setVisibility(View.GONE);}
+                            Toast.makeText(NewRegister.this,"檢測到非法字元",Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -145,7 +181,9 @@ public class NewRegister extends AppCompatActivity {
         if(counter == 1){gender.setVisibility(View.VISIBLE);}
         else{gender.setVisibility(View.GONE);}
 
-        if(counter == 4){haveMail.setVisibility(View.VISIBLE);}
+        if(counter == 4){
+            haveMail.setVisibility(View.VISIBLE);
+        }
         else{
             haveMail.setVisibility(View.GONE);
             build.setVisibility(View.GONE);
@@ -163,11 +201,29 @@ public class NewRegister extends AppCompatActivity {
         else{next.setText("下一步");}
 
         if(counter == 1 || counter == 3 || counter >= 8){answer.setVisibility(View.GONE);}
-        else{
+        else if(counter == 4 && !data[counter].trim().isEmpty() && no.isChecked()){
+            answer.setText(data[counter].substring(0, data[counter].length()-11));
+            answer.setVisibility(View.VISIBLE);
+        }else{
             if(!data[counter].trim().isEmpty()){answer.setText(data[counter]);}
             answer.setVisibility(View.VISIBLE);
         }
 
+        if(counter == 5 || counter == 6){
+            answer.setImeOptions(EditorInfo.IME_FLAG_FORCE_ASCII);
+            answer.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }else if(counter == 4){
+            answer.setImeOptions(EditorInfo.IME_FLAG_FORCE_ASCII);
+            answer.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+        }else{
+            answer.setImeOptions(EditorInfo.TYPE_CLASS_TEXT);
+            answer.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+
+        next.setEnabled(true);
+        Log.v("test", "inputType = "+answer.getInputType());
+        Log.v("test", "counter = "+counter);
     }
 
     public void previous(View v){
@@ -210,6 +266,9 @@ public class NewRegister extends AppCompatActivity {
             case 4:
                 answer.setHint(R.string.acc);
                 question.setText(R.string.get_mail);
+                if(no.isChecked()){
+                    next.setEnabled(false);
+                }
                 TextHandler();
                 break;
 
@@ -274,12 +333,15 @@ public class NewRegister extends AppCompatActivity {
                 break;
 
             case 4:
+                answer.setText(answer.getText().toString()+" ");
                 if(answer.getText().toString().trim().isEmpty()){
+                    next.setEnabled(false);
+                    build.setVisibility(View.GONE);
                     Toast.makeText(NewRegister.this,R.string.acc_err,Toast.LENGTH_SHORT).show();
                 }else{
-                    if(no.isChecked()){tmp = answer.getText().toString()+"@happy.coin"; nextQ(tmp);}
+                    if(no.isChecked()){tmp = answer.getText().toString().trim()+"@happy.coin"; nextQ(tmp);}
                     else if(yes.isChecked()){
-                        tmp = answer.getText().toString();
+                        tmp = answer.getText().toString().trim();
                         if(!android.util.Patterns.EMAIL_ADDRESS.matcher(tmp).matches()){
                             Toast.makeText(NewRegister.this,R.string.mail_err,Toast.LENGTH_SHORT).show();
                         }else{nextQ(tmp);}
@@ -288,14 +350,16 @@ public class NewRegister extends AppCompatActivity {
                 break;
 
             case 5:
-                tmp = answer.getText().toString();
+                answer.setText(answer.getText().toString()+" ");
+                tmp = answer.getText().toString().trim();
                 if(tmp.trim().isEmpty()){
                     Toast.makeText(NewRegister.this,R.string.pwd_err,Toast.LENGTH_SHORT).show();
                 }else{nextQ(tmp);}
                 break;
 
             case 6:
-                tmp = answer.getText().toString();
+                answer.setText(answer.getText().toString()+" ");
+                tmp = answer.getText().toString().trim();
                 if(tmp.trim().isEmpty() || !tmp.equals(data[counter-1])){
                     Toast.makeText(NewRegister.this,R.string.cnf_pwd_err,Toast.LENGTH_SHORT).show();
                 }else{nextQ(tmp);}
@@ -325,7 +389,7 @@ public class NewRegister extends AppCompatActivity {
     }
 
     public void nextQ(String q){
-        data[counter] = q;
+        data[counter] = q.trim();
         counter++;
         answer.setText("");
         question_render();
