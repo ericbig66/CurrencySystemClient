@@ -50,6 +50,15 @@
         android:onClick="execute"/>
 
     <Button
+        android:id="@+id/market"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:onClick="execute"
+        android:text="進入賣場"
+        android:textSize="20sp" />
+
+    <Button
         android:id="@+id/diary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

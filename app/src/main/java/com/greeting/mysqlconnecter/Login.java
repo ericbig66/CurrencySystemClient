@@ -29,9 +29,9 @@ import java.sql.Types;
 
 public class Login extends AppCompatActivity {
     //連接資料庫的IP、帳號(不可用root)、密碼
-    private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
-    private static final String user = "currency";
-    private static final String pass = "@SAclass";
+    public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
+    public static final String user = "currency";
+    public static final String pass = "@SAclass";
     String pfs;//profile String
     public static Bitmap pf;//profile picture
     public static float pfr;//profile rotation
