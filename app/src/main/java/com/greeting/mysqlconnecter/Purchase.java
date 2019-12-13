@@ -213,7 +213,7 @@ public class Purchase extends AppCompatActivity {
             if(result.substring(0,4).equals("hide")){
 //                Log.v("test","result Length = "+result.length());
                 data = result.substring(4);
-                Login.wcm = data;
+//                Login.wcm = data;
                 Intent intent = new Intent(Purchase.this,MainMenu.class);
 //                intent.putExtra("msg",data);
 //                intent.putExtra("acc",acc);

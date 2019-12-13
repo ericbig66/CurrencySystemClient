@@ -53,7 +53,7 @@ public class MainMenu extends AppCompatActivity {
         Timer timer = new Timer(true);
 
         if(obp>=2){
-            Login.wcm ="";
+            //Login.wcm ="";
             Login.acc ="";
             Intent intent = new Intent(MainMenu.this, Login.class);
             startActivity(intent);

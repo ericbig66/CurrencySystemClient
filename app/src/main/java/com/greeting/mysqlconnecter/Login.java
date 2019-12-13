@@ -35,7 +35,7 @@ public class Login extends AppCompatActivity {
     String pfs;//profile String
     public static Bitmap pf;//profile picture
     public static float pfr;//profile rotation
-    public static String wcm;//welcome message
+//    public static String wcm;//welcome message
     public static String acc;//account
 
     Button btnFetch, btnClear, reg;
@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, MainMenu.class);
         //intent.putExtra("acc",account);
         intent.putExtra("msg",data);
-        wcm = data;
+//        wcm = data;
         startActivity(intent);
 //    finish();
     }

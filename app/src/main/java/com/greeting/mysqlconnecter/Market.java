@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +47,7 @@ public class Market extends AppCompatActivity {
     public static ArrayList<Integer> Pprice = new ArrayList<>();
     public static ArrayList<Integer> Pamount = new ArrayList<>();
     public static ArrayList<String> Vendor = new ArrayList<>();
+    public static ArrayList<String> PIMG = new ArrayList<>();
 
     int function = 0;
 
@@ -62,7 +67,7 @@ public class Market extends AppCompatActivity {
         sv.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                closekeybord();
+               // closekeybord();
             }
         });
 
@@ -99,6 +104,7 @@ public class Market extends AppCompatActivity {
                         Pprice.add(rs.getInt("price"));
                         Pamount.add(rs.getInt("amount"));
                         Vendor.add(rs.getString("vendor"));
+                        PIMG.add(rs.getString("productIMG"));
                     }
 
                     return PID.size() + "";//回傳結果給onPostExecute==>取得輸出變數(位置)
@@ -159,7 +165,7 @@ public class Market extends AppCompatActivity {
 
     //商品卡產生器
     public void cardRenderer(){
-        for(int i = 0 ; i < cardCounter ; i++){
+        for(int i = 0 ; i < PID.size() ; i++){
             Log.v("test", "render card "+i);
             add(i);
         }
@@ -204,19 +210,22 @@ public class Market extends AppCompatActivity {
         //商品圖片
         ImageView propic = new ImageView(this);
         LinearLayout.LayoutParams propicp = new LinearLayout.LayoutParams(DP(120),DP(90));
-        propic.setImageResource(R.drawable.example);
+        //propic.setImageBitmap(Bitmap.createScaledBitmap(ConvertToBitmap(ID), 120, 90, false));
+        propic.setImageBitmap(ConvertToBitmap(ID));
         propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        try {
+//
+//        }catch (Exception e){
+//            Log.v("test", "recycle Bitmap error:\n"+e.toString());
+//        }
         propic.setLayoutParams(propicp);
         propic.setId(5*ID);
-        propic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int id = ID;
-                if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-                final int quantity = Integer.parseInt(amount.getText().toString());
-                closekeybord();
-                identifier("D",id,quantity);
-            }
+        propic.setOnClickListener(v -> {
+            final int id = ID;
+            if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
+            final int quantity = Integer.parseInt(amount.getText().toString());
+            closekeybord();
+            identifier("D",id,quantity);
         });
 
         //商品價格
@@ -306,15 +315,12 @@ public class Market extends AppCompatActivity {
         buybtn.setTextSize(18f);
         buybtn.setLayoutParams(buybtnp);
         buybtn.setId(5*ID+4);
-        buybtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int id = ID;
-                if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-                final int quantity = Integer.parseInt(amount.getText().toString());
-                closekeybord();
-                identifier("B",id,quantity);
-            }
+        buybtn.setOnClickListener(v -> {
+            final int id = ID;
+            if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
+            final int quantity = Integer.parseInt(amount.getText().toString());
+            closekeybord();
+            identifier("B",id,quantity);
         });
 
         //將內容填入frame
@@ -380,5 +386,35 @@ public class Market extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(Market.this, MainMenu.class);
         startActivity(intent);
+        finish();
+    }
+
+    public Bitmap ConvertToBitmap(int ID){
+        try{
+//            Log.v("test",PIMG.get(ID));
+            byte[] imageBytes = Base64.decode(PIMG.get(ID), Base64.DEFAULT);
+            Bitmap proimg = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            int w = proimg.getWidth();
+            int h = proimg.getHeight();
+            Log.v("test","pic"+ID+" original = "+w+"*"+h);
+            int scale = 1;
+            if(w>h && (w/120)>1 || h==w && (w/120)>1){
+                scale = w/120;
+                w = w/scale;
+                h = h/scale;
+            }else if(h>w && (h/120)>1){
+                scale = h/120;
+                w = w/scale;
+                h = h/scale;
+            }
+            Log.v("test","pic"+ID+" resized = "+w+"*"+h);
+            proimg = Bitmap.createScaledBitmap(proimg, w, h, false);
+            return proimg;
+        }catch (Exception e){
+            Log.v("test","error = "+e.toString());
+            return null;
+        }
+
+
     }
 }
