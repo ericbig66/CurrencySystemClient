@@ -35,6 +35,8 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 
+import static com.greeting.mysqlconnecter.Login.acc;
+
 public class Market extends AppCompatActivity {
 
     //連接資料庫的IP、帳號(不可用root)、密碼
@@ -54,7 +56,7 @@ public class Market extends AppCompatActivity {
     Button addProd;
     LinearLayout ll;
     ScrollView sv;
-    int cardCounter = 0, BuyId=-1, BuyQuantity=0;
+    public static int cardCounter = 0, BuyId=-1, BuyQuantity=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class Market extends AppCompatActivity {
         sv.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-               // closekeybord();
+                // closekeybord();
             }
         });
 
@@ -127,7 +129,7 @@ public class Market extends AppCompatActivity {
                     //experiment part start
                     //此處呼叫Stored procedure(call 函數名稱(?)==>問號數量代表輸出、輸入的變數數量)
                     CallableStatement cstmt = con.prepareCall("{call sell(?,?,?,?,?)}");
-                    cstmt.setString(1,Login.acc);//設定輸出變數(參數位置,參數型別)
+                    cstmt.setString(1,acc);//設定輸出變數(參數位置,參數型別)
                     cstmt.setString(2,PID.get(BuyId));
                     cstmt.setString(3,Vendor.get(BuyId));
                     cstmt.setInt(4,BuyQuantity);
@@ -153,7 +155,7 @@ public class Market extends AppCompatActivity {
                     cardRenderer();
                 }
                 else if(function == 1){
-                 Toast.makeText(Market.this, result, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Market.this, result, Toast.LENGTH_SHORT).show();
                 }
                 function = -1;
             }catch (Exception e){
@@ -295,6 +297,7 @@ public class Market extends AppCompatActivity {
         detail.setLayoutParams(detailp);
         detail.setId(5*ID+3);
         detail.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 final int id = ID;
@@ -356,14 +359,17 @@ public class Market extends AppCompatActivity {
         return (int)dp;
     }
     /////////////////////////////////////////////
+    public static int BuyAmount = 0;
     public void identifier(String act, int ID,int quantity){
+        BuyAmount = quantity;
+        BuyId=ID;
         if(act.equals("D")){
             Log.v("test","您正在檢視第"+Pname.get(ID)+"的詳細資料");
+            Intent intent = new Intent(Market.this,MoreInfo.class);
+            startActivity(intent);
         }else if(act.equals("B")){
             Log.v("test","您購買了"+quantity+"個"+Pname.get(ID));
             function = 1;
-            BuyId = ID;
-            BuyQuantity = quantity;
             if(quantity>0){
                 ConnectMySql connectMySql = new ConnectMySql();
                 connectMySql.execute("");
@@ -388,6 +394,7 @@ public class Market extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
     public Bitmap ConvertToBitmap(int ID){
         try{
