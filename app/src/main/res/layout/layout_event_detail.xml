@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductDetail">
-
+    tools:context=".EventDetail">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -66,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="0"
-                    android:text="商品資訊"
+                    android:text="活動資訊"
                     android:textAlignment="viewStart"
                     android:textSize="24sp" />
 

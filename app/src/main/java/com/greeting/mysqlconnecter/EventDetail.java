@@ -24,25 +24,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
 
+import static com.greeting.mysqlconnecter.Event.Aamount;
+import static com.greeting.mysqlconnecter.Event.AamountLeft;
+import static com.greeting.mysqlconnecter.Event.Actpic;
+import static com.greeting.mysqlconnecter.Event.Adesc;
+import static com.greeting.mysqlconnecter.Event.Aid;
+import static com.greeting.mysqlconnecter.Event.Aname;
+import static com.greeting.mysqlconnecter.Event.Areward;
+import static com.greeting.mysqlconnecter.Event.Avendor;
+import static com.greeting.mysqlconnecter.Event.EventId;
+import static com.greeting.mysqlconnecter.Event.attended;
 import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
 import static com.greeting.mysqlconnecter.Market.BuyAmount;
-import static com.greeting.mysqlconnecter.Market.BuyId;
-import static com.greeting.mysqlconnecter.Market.PID;
-import static com.greeting.mysqlconnecter.Market.PIMG;
-import static com.greeting.mysqlconnecter.Market.Pamount;
-import static com.greeting.mysqlconnecter.Market.Pname;
-import static com.greeting.mysqlconnecter.Market.Pprice;
-import static com.greeting.mysqlconnecter.Market.Vendor;
 
-public class ProductDetail extends AppCompatActivity {
+public class EventDetail extends AppCompatActivity {
 
     public Bitmap ConvertToBitmap(int ID){
         try{
 //            Log.v("test",PIMG.get(ID));
-            byte[] imageBytes = Base64.decode(PIMG.get(ID), Base64.DEFAULT);
+            byte[] imageBytes = Base64.decode(Actpic.get(ID), Base64.DEFAULT);
             Bitmap proimg = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             int w = proimg.getWidth();
             int h = proimg.getHeight();
@@ -69,40 +72,34 @@ public class ProductDetail extends AppCompatActivity {
     }
 
     EditText Qt;
-
+    Button btnBuy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_product_detail);
-
+        setContentView(R.layout.layout_event_detail);
         ImageView merPic = findViewById(R.id.merPic);
-        merPic.setImageBitmap(ConvertToBitmap(BuyId));
+        merPic.setImageBitmap(ConvertToBitmap(EventId));
 
         TextView txtName=findViewById(R.id.txtName);
-        txtName.setText(Pname.get(BuyId));
+        txtName.setText(Aname.get(EventId));
 
         TextView txtVdrName=findViewById(R.id.txtVdrName);
-        txtVdrName.setText("廠商名稱: "+Vendor.get(BuyId)+"\n商品編號: "+PID.get(BuyId)+"\n庫存數量: "+Pamount.get(BuyId)+"\n商品價格: $"+Pprice.get(BuyId));
+        txtVdrName.setText("主辦廠商: "+Avendor.get(EventId)+"\n活動名稱: "+Aname.get(EventId)+"\n剩餘名額: "+AamountLeft.get(EventId)+"人\n回饋金額: $"+Areward.get(EventId)+"\n活動說明:\n"+Adesc.get(EventId));
 
         Qt = findViewById(R.id.Qt);
         Qt.setText(BuyAmount+"");
 
-        Button btnBuy = findViewById(R.id.btnBuy);
+        btnBuy = findViewById(R.id.btnBuy);
+        if (attended.contains(Aid.get(EventId))){btnBuy.setText("取消報名");}
+        else{btnBuy.setText("參加");}
         btnBuy.setOnClickListener(v -> Buyer());
     }
 
     void Buyer() {
-        if(Qt.getText().toString().trim().isEmpty()){Qt.setText("0");}
-        final int quantity = Integer.parseInt(Qt.getText().toString());
-        closekeybord();
-
-        if(quantity>0){
-            BuyAmount = Integer.parseInt(Qt.getText().toString().trim());
-            ConnectMySql connectMySql = new ConnectMySql();
-            connectMySql.execute("");
-        }else {
-            Toast.makeText(ProductDetail.this, "請至少購買一項商品", Toast.LENGTH_SHORT).show();
-        }
+        if(btnBuy.getText().toString().equals("參加")){btnBuy.setText("取消報名");}
+        else{btnBuy.setText("參加");}
+        ConnectMySql connectMySql = new ConnectMySql();
+        connectMySql.execute("");
     }
 
 
@@ -113,26 +110,24 @@ public class ProductDetail extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            Toast.makeText(ProductDetail.this,"請稍後...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(EventDetail.this,"請稍後...",Toast.LENGTH_SHORT).show();
         }
         //查詢執行動作(不可使用與UI相關的指令)
         @Override
         protected String doInBackground(String... strings) {
             ////////////////////////////////////////////
             try {
+                Log.v("test","活動報名中");
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(url, user, pass);
                 //建立查詢
                 String result ="";
-                CallableStatement cstmt = con.prepareCall("{call sell(?,?,?,?,?)}");
+                CallableStatement cstmt = con.prepareCall("{call activity_attend(?,?,?)}");
                 cstmt.setString(1,acc);//設定輸出變數(參數位置,參數型別)
-                cstmt.setString(2,PID.get(BuyId));
-                cstmt.setString(3,Vendor.get(BuyId));
-                cstmt.setInt(4, BuyAmount);
-                cstmt.registerOutParameter(5, Types.VARCHAR);
+                cstmt.setString(2,Aid.get(EventId));
+                cstmt.registerOutParameter(3, Types.VARCHAR);
                 cstmt.executeUpdate();
                 return cstmt.getString("info");
-
             } catch (Exception e) {
                 e.printStackTrace();
                 res = e.toString();
@@ -143,7 +138,7 @@ public class ProductDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try{
-                Toast.makeText(ProductDetail.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EventDetail.this, result, Toast.LENGTH_SHORT).show();
             }catch (Exception e){
                 Log.v("test","錯誤: "+e.toString());
             }
@@ -164,5 +159,5 @@ public class ProductDetail extends AppCompatActivity {
         dp = dp * ((float) Resources.getSystem().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
         return (int)dp;
     }
-}
 
+}

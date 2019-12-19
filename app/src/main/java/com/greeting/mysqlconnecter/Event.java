@@ -332,7 +332,7 @@ public class Event extends AppCompatActivity {
         EventId=ID;
         if(act.equals("D")){
             Log.v("test","您正在檢視第"+Aname.get(ID)+"的詳細資料");
-            Intent intent = new Intent(Event.this, ProductDetail.class);
+            Intent intent = new Intent(Event.this, EventDetail.class);
             startActivity(intent);
         }else if(act.equals("B")){
             Log.v("test","您報名了==>"+Aname.get(ID));
