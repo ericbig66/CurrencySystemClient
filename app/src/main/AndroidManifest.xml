@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MoreInfo"></activity>
+        <activity android:name=".Event"></activity>
+        <activity android:name=".ProductDetail" />
         <activity android:name=".Market" />
         <activity android:name=".NewRegister" />
         <activity android:name=".Diary" />

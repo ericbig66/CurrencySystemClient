@@ -31,40 +31,61 @@
         android:text="TextView"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/getcoin"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="收取樂幣"
-        android:textSize="20sp"
-        android:onClick="execute"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/paycoin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="支付樂幣"
-        android:textSize="20sp"
-        android:onClick="execute"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/market"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:onClick="execute"
-        android:text="進入賣場"
-        android:textSize="20sp" />
+            <Button
+                android:id="@+id/market"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="進入賣場"
+                android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/diary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="日記簿"
-        android:textSize="20sp"
-        android:onClick="execute"/>
+            <Button
+                android:id="@+id/Event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="活動報名"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="日記簿"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/getcoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="收取樂幣"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/paycoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="支付樂幣"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

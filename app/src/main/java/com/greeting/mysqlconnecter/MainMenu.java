@@ -44,6 +44,9 @@ public class MainMenu extends AppCompatActivity {
             case R.id.diary:
                 intent = new Intent(MainMenu.this, Diary.class);
                 break;
+            case R.id.Event:
+                intent = new Intent(MainMenu.this, Event.class);
+                break;
         }
         startActivity(intent);
         finish();

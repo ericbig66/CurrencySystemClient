@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -32,48 +30,43 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.greeting.mysqlconnecter.Login.acc;
+import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.url;
+import static com.greeting.mysqlconnecter.Login.user;
 
-public class Market extends AppCompatActivity {
+public class Event extends AppCompatActivity {
 
-    //連接資料庫的IP、帳號(不可用root)、密碼
-    private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
-    private static final String user = "currency";
-    private static final String pass = "@SAclass";
-
-    public static ArrayList<String> PID = new ArrayList<>();
-    public static ArrayList<String> Pname = new ArrayList<>();
-    public static ArrayList<Integer> Pprice = new ArrayList<>();
-    public static ArrayList<Integer> Pamount = new ArrayList<>();
-    public static ArrayList<String> Vendor = new ArrayList<>();
-    public static ArrayList<String> PIMG = new ArrayList<>();
-
+    public static ArrayList<String> Aid = new ArrayList<>();
+    public static ArrayList<String> Aname = new ArrayList<>();
+    public static ArrayList<Integer> Areward = new ArrayList<>();
+    public static ArrayList<Integer> Aamount = new ArrayList<>();
+    public static ArrayList<Integer> AamountLeft = new ArrayList<>();
+    public static ArrayList<String> Adesc = new ArrayList<>();
+    public static ArrayList<String> Avendor = new ArrayList<>();
+    public static ArrayList<Date> Aendapp = new ArrayList<>();
+    public static ArrayList<Date> AactDate = new ArrayList<>();
+    public static ArrayList<Date> AactStart = new ArrayList<>();
+    public static ArrayList<Date> AactEnd = new ArrayList<>();
+    public static ArrayList<String> Actpic = new ArrayList<>();
+    public static ArrayList<String> attended = new ArrayList<>();
     int function = 0;
 
-    Button addProd;
     LinearLayout ll;
     ScrollView sv;
-    public static int cardCounter = 0, BuyId=-1, BuyQuantity=0;
+    public static int cardCounter = 0, EventId=-1, BuyQuantity=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_market);
-
+        setContentView(R.layout.layout_event);
         ll = findViewById(R.id.ll);
         sv = findViewById(R.id.sv);
 
-        sv.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                // closekeybord();
-            }
-        });
-
         ConnectMySql connectMySql = new ConnectMySql();
         connectMySql.execute("");
-
     }
 
     //建立連接與查詢非同步作業
@@ -83,7 +76,7 @@ public class Market extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            Toast.makeText(Market.this,"請稍後...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Event.this,"請稍後...",Toast.LENGTH_SHORT).show();
         }
         //查詢執行動作(不可使用與UI相關的指令)
         @Override
@@ -96,18 +89,28 @@ public class Market extends AppCompatActivity {
                     //建立查詢
                     String result = "";
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("select * from product");
+                    ResultSet rs = st.executeQuery("select * from activity");
 
                     while (rs.next()) {
-                        PID.add(rs.getString("productID"));
-                        Pname.add(rs.getString("productName"));
-                        Pprice.add(rs.getInt("price"));
-                        Pamount.add(rs.getInt("amount"));
-                        Vendor.add(rs.getString("vendor"));
-                        PIMG.add(rs.getString("productIMG"));
+                        Aid.add(rs.getString("activityNumber"));
+                        Aname.add(rs.getString("activityName"));
+                        Areward.add(rs.getInt("reward"));
+                        Aamount.add(rs.getInt("amount"));
+                        AamountLeft.add(rs.getInt("amountLeft"));
+                        Adesc.add(rs.getString("description"));
+                        Avendor.add(rs.getString("vendor"));
+                        Aendapp.add(rs.getDate("endApply"));
+                        AactDate.add(rs.getDate("actDate"));
+                        AactStart.add(rs.getDate("actStart"));
+                        AactEnd.add(rs.getDate("actEnd"));
+                        Actpic.add(rs.getString("actpic"));
                     }
 
-                    return PID.size() + "";//回傳結果給onPostExecute==>取得輸出變數(位置)
+                    attended.clear();
+                    rs = st.executeQuery("select activity from attendlist where account = '"+acc+"'");
+                    while(rs.next()){attended.add(rs.getString("activity"));}
+
+                    return Aname.size() + "";//回傳結果給onPostExecute==>取得輸出變數(位置)
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -118,24 +121,17 @@ public class Market extends AppCompatActivity {
             ////////////////////////////////////////////
             else if(function == 1){
                 try {
+                    Log.v("test","活動報名中");
                     Class.forName("com.mysql.jdbc.Driver");
                     Connection con = DriverManager.getConnection(url, user, pass);
                     //建立查詢
                     String result ="";
-                    //Statement st = con.createStatement();
-//                ResultSet rs = st.executeQuery("call login(@fname, '"+account+"', '"+password+"'); select @fname;");
-                    //experiment part start
-                    //此處呼叫Stored procedure(call 函數名稱(?)==>問號數量代表輸出、輸入的變數數量)
-                    CallableStatement cstmt = con.prepareCall("{call sell(?,?,?,?,?)}");
+                    CallableStatement cstmt = con.prepareCall("{call activity_attend(?,?,?)}");
                     cstmt.setString(1,acc);//設定輸出變數(參數位置,參數型別)
-                    cstmt.setString(2,PID.get(BuyId));
-                    cstmt.setString(3,Vendor.get(BuyId));
-                    cstmt.setInt(4,BuyQuantity);
-                    cstmt.registerOutParameter(5, Types.VARCHAR);
+                    cstmt.setString(2,Aid.get(EventId));
+                    cstmt.registerOutParameter(3, Types.VARCHAR);
                     cstmt.executeUpdate();
                     return cstmt.getString("info");
-                    //experiment part end
-
                 } catch (Exception e) {
                     e.printStackTrace();
                     res = e.toString();
@@ -153,7 +149,7 @@ public class Market extends AppCompatActivity {
                     cardRenderer();
                 }
                 else if(function == 1){
-                    Toast.makeText(Market.this, result, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Event.this, result, Toast.LENGTH_SHORT).show();
                 }
                 function = -1;
             }catch (Exception e){
@@ -165,7 +161,7 @@ public class Market extends AppCompatActivity {
 
     //商品卡產生器
     public void cardRenderer(){
-        for(int i = 0 ; i < PID.size() ; i++){
+        for(int i = 0 ; i < Aname.size() ; i++){
             Log.v("test", "render card "+i);
             add(i);
         }
@@ -195,43 +191,24 @@ public class Market extends AppCompatActivity {
         picpri.setOrientation(LinearLayout.VERTICAL);
         picpri.setLayoutParams(picprip);
 
-        //數量
-        final EditText amount = new EditText(this);
-        LinearLayout.LayoutParams amountp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        amount.setEms(3);
-        amount.setInputType(InputType.TYPE_CLASS_NUMBER);
-        amount.setLayoutParams(amountp);
-        amount.setId(5*ID+2);
-        amount.setText("1");
-
         //商品圖片
         ImageView propic = new ImageView(this);
         LinearLayout.LayoutParams propicp = new LinearLayout.LayoutParams(DP(120),DP(90));
         //propic.setImageBitmap(Bitmap.createScaledBitmap(ConvertToBitmap(ID), 120, 90, false));
         propic.setImageBitmap(ConvertToBitmap(ID));
         propic.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        try {
-//
-//        }catch (Exception e){
-//            Log.v("test", "recycle Bitmap error:\n"+e.toString());
-//        }
         propic.setLayoutParams(propicp);
         propic.setId(5*ID);
         propic.setOnClickListener(v -> {
             final int id = ID;
-            if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-            final int quantity = Integer.parseInt(amount.getText().toString());
             closekeybord();
-            identifier("D",id,quantity);
+            identifier("D",id);
         });
 
-        //商品價格
+        //獎勵金額
         TextView price = new TextView(this);
         LinearLayout.LayoutParams pricep = new LinearLayout.LayoutParams(DP(120),DP(30));
-        price.setText("價格: $"+Pprice.get(ID));
+        price.setText("獎勵: $"+Areward.get(ID));
         price.setTextSize(18f);
         price.setLayoutParams(picprip);
 
@@ -244,19 +221,19 @@ public class Market extends AppCompatActivity {
         proinf.setOrientation(LinearLayout.VERTICAL);
         proinf.setLayoutParams(proinfp);
 
-        //商品名稱
+        //活動名稱
         TextView proname = new TextView(this);
         LinearLayout.LayoutParams pronamep = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        proname.setText(Pname.get(ID));
+        proname.setText(Aname.get(ID));
         proname.setTextSize(18f);
         proname.setClickable(true);
         proname.setLayoutParams(pronamep);
         proname.setId(5*ID+1);
 
-        //購買資訊
+        //報名資訊
         LinearLayout buyinf = new LinearLayout(this);
         LinearLayout.LayoutParams buyinfp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -265,13 +242,13 @@ public class Market extends AppCompatActivity {
         buyinf.setOrientation(LinearLayout.HORIZONTAL);
         buyinf.setLayoutParams(buyinfp);
 
-        //數量:[標籤]
+        //剩餘名額
         TextView amount_label = new TextView(this);
         LinearLayout.LayoutParams amount_labelp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        amount_label.setText("數量：");
+        amount_label.setText("剩餘名額："+AamountLeft.get(ID));
         amount_label.setTextSize(18f);
         amount_label.setLayoutParams(amount_labelp);
 
@@ -294,34 +271,29 @@ public class Market extends AppCompatActivity {
         detail.setTextSize(18f);
         detail.setLayoutParams(detailp);
         detail.setId(5*ID+3);
-        detail.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                final int id = ID;
-                if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-                final int quantity = Integer.parseInt(amount.getText().toString());
-                closekeybord();
-                identifier("D",id,quantity);
-            }
+        detail.setOnClickListener(v -> {
+            final int id = ID;
+            closekeybord();
+            identifier("D",id);
         });
 
-        //訂購按鈕
+        //參加按鈕
         Button buybtn = new Button(this);
         LinearLayout.LayoutParams buybtnp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,0.5f
         );
-        buybtn.setText("訂購");
+        if(attended.contains(Aid.get(ID))){buybtn.setText("取消報名");}
+        else{buybtn.setText("參加");}
         buybtn.setTextSize(18f);
         buybtn.setLayoutParams(buybtnp);
         buybtn.setId(5*ID+4);
         buybtn.setOnClickListener(v -> {
+            if(buybtn.getText().toString().equals("參加")){buybtn.setText("取消報名");}
+            else{buybtn.setText("參加");}
             final int id = ID;
-            if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-            final int quantity = Integer.parseInt(amount.getText().toString());
             closekeybord();
-            identifier("B",id,quantity);
+            identifier("B",id);
         });
 
         //將內容填入frame
@@ -339,7 +311,6 @@ public class Market extends AppCompatActivity {
         */
         proinf.addView(proname);
         buyinf.addView(amount_label);
-        buyinf.addView(amount);
         proinf.addView(buyinf);
         btnbox.addView(detail);
         btnbox.addView(buybtn);
@@ -357,24 +328,17 @@ public class Market extends AppCompatActivity {
         return (int)dp;
     }
     /////////////////////////////////////////////
-    public static int BuyAmount = 0;
-    public void identifier(String act, int ID,int quantity){
-        BuyAmount = quantity;
-        BuyId=ID;
+    public void identifier(String act, int ID){
+        EventId=ID;
         if(act.equals("D")){
-            Log.v("test","您正在檢視第"+Pname.get(ID)+"的詳細資料");
-            Intent intent = new Intent(Market.this, ProductDetail.class);
+            Log.v("test","您正在檢視第"+Aname.get(ID)+"的詳細資料");
+            Intent intent = new Intent(Event.this, ProductDetail.class);
             startActivity(intent);
         }else if(act.equals("B")){
-            Log.v("test","您購買了"+quantity+"個"+Pname.get(ID));
+            Log.v("test","您報名了==>"+Aname.get(ID));
             function = 1;
-            if(quantity>0){
-                ConnectMySql connectMySql = new ConnectMySql();
-                connectMySql.execute("");
-            }else{
-                function = -1;
-                Toast.makeText(Market.this,"請至少購買一項商品",Toast.LENGTH_SHORT).show();
-            }
+            ConnectMySql connectMySql = new ConnectMySql();
+            connectMySql.execute("");
         }
     }
 
@@ -388,8 +352,21 @@ public class Market extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        Intent intent = new Intent(Market.this, MainMenu.class);
+        Intent intent = new Intent(Event.this, MainMenu.class);
         startActivity(intent);
+         Aid.clear();
+         Aname.clear();
+         Areward.clear();
+         Aamount.clear();
+         AamountLeft.clear();
+         Adesc.clear();
+         Avendor.clear();
+         Aendapp.clear();
+         AactDate.clear();
+         AactStart.clear();
+         AactEnd.clear();
+         Actpic.clear();
+         attended.clear();
         finish();
     }
 
@@ -397,7 +374,7 @@ public class Market extends AppCompatActivity {
     public Bitmap ConvertToBitmap(int ID){
         try{
 //            Log.v("test",PIMG.get(ID));
-            byte[] imageBytes = Base64.decode(PIMG.get(ID), Base64.DEFAULT);
+            byte[] imageBytes = Base64.decode(Actpic.get(ID), Base64.DEFAULT);
             Bitmap proimg = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
             int w = proimg.getWidth();
             int h = proimg.getHeight();

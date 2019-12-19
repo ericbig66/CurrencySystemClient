@@ -20,10 +20,7 @@ import android.widget.Toast;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
 
 import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
@@ -31,13 +28,12 @@ import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
 import static com.greeting.mysqlconnecter.Market.BuyAmount;
 import static com.greeting.mysqlconnecter.Market.BuyId;
-import static com.greeting.mysqlconnecter.Market.BuyQuantity;
 import static com.greeting.mysqlconnecter.Market.PID;
 import static com.greeting.mysqlconnecter.Market.PIMG;
 import static com.greeting.mysqlconnecter.Market.Pname;
 import static com.greeting.mysqlconnecter.Market.Vendor;
 
-public class MoreInfo extends AppCompatActivity {
+public class ProductDetail extends AppCompatActivity {
 
     public Bitmap ConvertToBitmap(int ID){
         try{
@@ -73,7 +69,7 @@ public class MoreInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_more_info);
+        setContentView(R.layout.layout_product_detail);
 
         ImageView merPic = findViewById(R.id.merPic);
         merPic.setImageBitmap(ConvertToBitmap(BuyId));
@@ -101,7 +97,7 @@ public class MoreInfo extends AppCompatActivity {
             ConnectMySql connectMySql = new ConnectMySql();
             connectMySql.execute("");
         }else {
-            Toast.makeText(MoreInfo.this, "請至少購買一項商品", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductDetail.this, "請至少購買一項商品", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -113,7 +109,7 @@ public class MoreInfo extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            Toast.makeText(MoreInfo.this,"請稍後...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductDetail.this,"請稍後...",Toast.LENGTH_SHORT).show();
         }
         //查詢執行動作(不可使用與UI相關的指令)
         @Override
@@ -143,7 +139,7 @@ public class MoreInfo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try{
-                Toast.makeText(MoreInfo.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProductDetail.this, result, Toast.LENGTH_SHORT).show();
             }catch (Exception e){
                 Log.v("test","錯誤: "+e.toString());
             }
