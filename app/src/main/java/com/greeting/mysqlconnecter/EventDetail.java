@@ -24,7 +24,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-import static com.greeting.mysqlconnecter.Event.Aamount;
 import static com.greeting.mysqlconnecter.Event.AamountLeft;
 import static com.greeting.mysqlconnecter.Event.Actpic;
 import static com.greeting.mysqlconnecter.Event.Adesc;
@@ -85,9 +84,7 @@ public class EventDetail extends AppCompatActivity {
 
         TextView txtVdrName=findViewById(R.id.txtVdrName);
         txtVdrName.setText("主辦廠商: "+Avendor.get(EventId)+"\n活動名稱: "+Aname.get(EventId)+"\n剩餘名額: "+AamountLeft.get(EventId)+"人\n回饋金額: $"+Areward.get(EventId)+"\n活動說明:\n"+Adesc.get(EventId));
-
-        Qt = findViewById(R.id.Qt);
-        Qt.setText(BuyAmount+"");
+        
 
         btnBuy = findViewById(R.id.btnBuy);
         if (attended.contains(Aid.get(EventId))){btnBuy.setText("取消報名");}
@@ -96,8 +93,8 @@ public class EventDetail extends AppCompatActivity {
     }
 
     void Buyer() {
-        if(btnBuy.getText().toString().equals("參加")){btnBuy.setText("取消報名");}
-        else{btnBuy.setText("參加");}
+        //if(btnBuy.getText().toString().equals("參加")){btnBuy.setText("取消報名");}
+        //else{btnBuy.setText("參加");}
         ConnectMySql connectMySql = new ConnectMySql();
         connectMySql.execute("");
     }
@@ -138,6 +135,11 @@ public class EventDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try{
+                if (result.equals("報名成功")){
+                    btnBuy.setText("取消報名");
+                }else if(result.equals("已取消報名")){
+                    btnBuy.setText("參加");
+                }
                 Toast.makeText(EventDetail.this, result, Toast.LENGTH_SHORT).show();
             }catch (Exception e){
                 Log.v("test","錯誤: "+e.toString());
