@@ -390,6 +390,12 @@ public class Market extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(Market.this, MainMenu.class);
         startActivity(intent);
+        PID.clear();
+        Pname.clear();
+        Pprice.clear();
+        Pamount.clear();
+        Vendor.clear();
+        PIMG.clear();
         finish();
     }
 
