@@ -36,22 +36,24 @@ import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
+import static com.greeting.mysqlconnecter.MainMenu.AactDate;
+import static com.greeting.mysqlconnecter.MainMenu.AactEnd;
+import static com.greeting.mysqlconnecter.MainMenu.AactStart;
+import static com.greeting.mysqlconnecter.MainMenu.Aamount;
+import static com.greeting.mysqlconnecter.MainMenu.AamountLeft;
+import static com.greeting.mysqlconnecter.MainMenu.Actpic;
+import static com.greeting.mysqlconnecter.MainMenu.Adesc;
+import static com.greeting.mysqlconnecter.MainMenu.Aendapp;
+import static com.greeting.mysqlconnecter.MainMenu.Aid;
+import static com.greeting.mysqlconnecter.MainMenu.Aname;
+import static com.greeting.mysqlconnecter.MainMenu.Areward;
+import static com.greeting.mysqlconnecter.MainMenu.Avendor;
+import static com.greeting.mysqlconnecter.MainMenu.attended;
 
 public class Event extends AppCompatActivity {
 
-    public static ArrayList<String> Aid = new ArrayList<>();
-    public static ArrayList<String> Aname = new ArrayList<>();
-    public static ArrayList<Integer> Areward = new ArrayList<>();
-    public static ArrayList<Integer> Aamount = new ArrayList<>();
-    public static ArrayList<Integer> AamountLeft = new ArrayList<>();
-    public static ArrayList<String> Adesc = new ArrayList<>();
-    public static ArrayList<String> Avendor = new ArrayList<>();
-    public static ArrayList<Date> Aendapp = new ArrayList<>();
-    public static ArrayList<Date> AactDate = new ArrayList<>();
-    public static ArrayList<Date> AactStart = new ArrayList<>();
-    public static ArrayList<Date> AactEnd = new ArrayList<>();
-    public static ArrayList<String> Actpic = new ArrayList<>();
-    public static ArrayList<String> attended = new ArrayList<>();
+    //原array list 已移至 main menu
+
     int function = 0;
 
     LinearLayout ll;

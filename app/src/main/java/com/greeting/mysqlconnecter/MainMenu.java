@@ -17,6 +17,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 
 import static com.greeting.mysqlconnecter.Login.pass;
@@ -29,6 +31,35 @@ public class MainMenu extends AppCompatActivity {
     ImageView profile;
     final String acc = Login.acc;
     int obp = 0; //times of on back pressed
+
+    //array list 寄放區
+
+    //Market
+    public static ArrayList<String> PID = new ArrayList<>();
+    public static ArrayList<String> Pname = new ArrayList<>();
+    public static ArrayList<Integer> Pprice = new ArrayList<>();
+    public static ArrayList<Integer> Pamount = new ArrayList<>();
+    public static ArrayList<String> Vendor = new ArrayList<>();
+    public static ArrayList<String> PIMG = new ArrayList<>();
+
+    public static int BuyAmount = 0;
+
+    //Event
+    public static ArrayList<String> Aid = new ArrayList<>();
+    public static ArrayList<String> Aname = new ArrayList<>();
+    public static ArrayList<Integer> Areward = new ArrayList<>();
+    public static ArrayList<Integer> Aamount = new ArrayList<>();
+    public static ArrayList<Integer> AamountLeft = new ArrayList<>();
+    public static ArrayList<String> Adesc = new ArrayList<>();
+    public static ArrayList<String> Avendor = new ArrayList<>();
+    public static ArrayList<Date> Aendapp = new ArrayList<>();
+    public static ArrayList<Date> AactDate = new ArrayList<>();
+    public static ArrayList<Date> AactStart = new ArrayList<>();
+    public static ArrayList<Date> AactEnd = new ArrayList<>();
+    public static ArrayList<String> Actpic = new ArrayList<>();
+    public static ArrayList<String> attended = new ArrayList<>();
+
+    //
 
     public void execute(View v){
         switch (v.getId()){

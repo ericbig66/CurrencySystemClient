@@ -24,20 +24,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
 
-import static com.greeting.mysqlconnecter.Event.AamountLeft;
-import static com.greeting.mysqlconnecter.Event.Actpic;
-import static com.greeting.mysqlconnecter.Event.Adesc;
-import static com.greeting.mysqlconnecter.Event.Aid;
-import static com.greeting.mysqlconnecter.Event.Aname;
-import static com.greeting.mysqlconnecter.Event.Areward;
-import static com.greeting.mysqlconnecter.Event.Avendor;
+
 import static com.greeting.mysqlconnecter.Event.EventId;
-import static com.greeting.mysqlconnecter.Event.attended;
 import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
-import static com.greeting.mysqlconnecter.Market.BuyAmount;
+import static com.greeting.mysqlconnecter.MainMenu.AamountLeft;
+import static com.greeting.mysqlconnecter.MainMenu.Actpic;
+import static com.greeting.mysqlconnecter.MainMenu.Adesc;
+import static com.greeting.mysqlconnecter.MainMenu.Aid;
+import static com.greeting.mysqlconnecter.MainMenu.Aname;
+import static com.greeting.mysqlconnecter.MainMenu.Areward;
+import static com.greeting.mysqlconnecter.MainMenu.Avendor;
+import static com.greeting.mysqlconnecter.MainMenu.attended;
+
 
 public class EventDetail extends AppCompatActivity {
 
@@ -84,7 +85,7 @@ public class EventDetail extends AppCompatActivity {
 
         TextView txtVdrName=findViewById(R.id.txtVdrName);
         txtVdrName.setText("主辦廠商: "+Avendor.get(EventId)+"\n活動名稱: "+Aname.get(EventId)+"\n剩餘名額: "+AamountLeft.get(EventId)+"人\n回饋金額: $"+Areward.get(EventId)+"\n活動說明:\n"+Adesc.get(EventId));
-        
+
 
         btnBuy = findViewById(R.id.btnBuy);
         if (attended.contains(Aid.get(EventId))){btnBuy.setText("取消報名");}

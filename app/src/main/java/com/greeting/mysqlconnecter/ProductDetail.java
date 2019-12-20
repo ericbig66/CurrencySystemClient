@@ -3,6 +3,7 @@ package com.greeting.mysqlconnecter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,14 +29,15 @@ import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
-import static com.greeting.mysqlconnecter.Market.BuyAmount;
+import static com.greeting.mysqlconnecter.MainMenu.BuyAmount;
+import static com.greeting.mysqlconnecter.MainMenu.PID;
+import static com.greeting.mysqlconnecter.MainMenu.PIMG;
+import static com.greeting.mysqlconnecter.MainMenu.Pamount;
+import static com.greeting.mysqlconnecter.MainMenu.Pname;
+import static com.greeting.mysqlconnecter.MainMenu.Pprice;
+import static com.greeting.mysqlconnecter.MainMenu.Vendor;
 import static com.greeting.mysqlconnecter.Market.BuyId;
-import static com.greeting.mysqlconnecter.Market.PID;
-import static com.greeting.mysqlconnecter.Market.PIMG;
-import static com.greeting.mysqlconnecter.Market.Pamount;
-import static com.greeting.mysqlconnecter.Market.Pname;
-import static com.greeting.mysqlconnecter.Market.Pprice;
-import static com.greeting.mysqlconnecter.Market.Vendor;
+
 
 public class ProductDetail extends AppCompatActivity {
 
@@ -143,12 +145,32 @@ public class ProductDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try{
+                if (result.substring(0,4).equals("交易成功")){onBackPressed();}
                 Toast.makeText(ProductDetail.this, result, Toast.LENGTH_SHORT).show();
+
             }catch (Exception e){
                 Log.v("test","錯誤: "+e.toString());
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ProductDetail.this, Market.class);
+        startActivity(intent);
+        clear();
+        finish();
+    }
+
+    public void clear(){
+        PID.clear();
+        Pname.clear();
+        Pprice.clear();
+        Pamount.clear();
+        Vendor.clear();
+        PIMG.clear();
     }
 
     //隱藏鍵盤

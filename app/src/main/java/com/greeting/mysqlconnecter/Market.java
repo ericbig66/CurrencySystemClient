@@ -34,20 +34,23 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import static com.greeting.mysqlconnecter.Login.acc;
+import static com.greeting.mysqlconnecter.MainMenu.PID;
+import static com.greeting.mysqlconnecter.MainMenu.PIMG;
+import static com.greeting.mysqlconnecter.MainMenu.Pamount;
+import static com.greeting.mysqlconnecter.MainMenu.Pname;
+import static com.greeting.mysqlconnecter.MainMenu.Pprice;
+import static com.greeting.mysqlconnecter.MainMenu.Vendor;
 
 public class Market extends AppCompatActivity {
+    TextView loading;
+
 
     //連接資料庫的IP、帳號(不可用root)、密碼
     private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     private static final String user = "currency";
     private static final String pass = "@SAclass";
 
-    public static ArrayList<String> PID = new ArrayList<>();
-    public static ArrayList<String> Pname = new ArrayList<>();
-    public static ArrayList<Integer> Pprice = new ArrayList<>();
-    public static ArrayList<Integer> Pamount = new ArrayList<>();
-    public static ArrayList<String> Vendor = new ArrayList<>();
-    public static ArrayList<String> PIMG = new ArrayList<>();
+    //array list 已移至 main menu
 
     int function = 0;
 
@@ -60,6 +63,9 @@ public class Market extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_market);
+
+        loading = findViewById(R.id.loading);
+        loading.setVisibility(View.VISIBLE);
 
         ll = findViewById(R.id.ll);
         sv = findViewById(R.id.sv);
@@ -349,6 +355,7 @@ public class Market extends AppCompatActivity {
         frame.addView(picpri);
         frame.addView(proinf);
         ll.addView(frame);
+        loading.setVisibility(View.INVISIBLE);
         Log.v("test","card"+ID+"rendered");
     }
 
@@ -357,14 +364,15 @@ public class Market extends AppCompatActivity {
         return (int)dp;
     }
     /////////////////////////////////////////////
-    public static int BuyAmount = 0;
+
     public void identifier(String act, int ID,int quantity){
-        BuyAmount = quantity;
+        MainMenu.BuyAmount = quantity;
         BuyId=ID;
         if(act.equals("D")){
             Log.v("test","您正在檢視第"+Pname.get(ID)+"的詳細資料");
             Intent intent = new Intent(Market.this, ProductDetail.class);
             startActivity(intent);
+            finish();
         }else if(act.equals("B")){
             Log.v("test","您購買了"+quantity+"個"+Pname.get(ID));
             function = 1;
@@ -390,13 +398,17 @@ public class Market extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(Market.this, MainMenu.class);
         startActivity(intent);
+        clear();
+        finish();
+    }
+
+    public void clear(){
         PID.clear();
         Pname.clear();
         Pprice.clear();
         Pamount.clear();
         Vendor.clear();
         PIMG.clear();
-        finish();
     }
 
 
