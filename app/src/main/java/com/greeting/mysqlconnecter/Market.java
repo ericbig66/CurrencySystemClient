@@ -34,6 +34,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import static com.greeting.mysqlconnecter.Login.acc;
+import static com.greeting.mysqlconnecter.MainMenu.BuyAmount;
+import static com.greeting.mysqlconnecter.MainMenu.BuyId;
 import static com.greeting.mysqlconnecter.MainMenu.PID;
 import static com.greeting.mysqlconnecter.MainMenu.PIMG;
 import static com.greeting.mysqlconnecter.MainMenu.Pamount;
@@ -57,7 +59,7 @@ public class Market extends AppCompatActivity {
     Button addProd;
     LinearLayout ll;
     ScrollView sv;
-    public static int cardCounter = 0, BuyId=-1, BuyQuantity=0;
+    public static int cardCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +138,7 @@ public class Market extends AppCompatActivity {
                     cstmt.setString(1,acc);//設定輸出變數(參數位置,參數型別)
                     cstmt.setString(2,PID.get(BuyId));
                     cstmt.setString(3,Vendor.get(BuyId));
-                    cstmt.setInt(4,BuyQuantity);
+                    cstmt.setInt(4,BuyAmount);
                     cstmt.registerOutParameter(5, Types.VARCHAR);
                     cstmt.executeUpdate();
                     return cstmt.getString("info");
@@ -159,6 +161,10 @@ public class Market extends AppCompatActivity {
                     cardRenderer();
                 }
                 else if(function == 1){
+                    if(result.substring(0,4).equals("交易成功")){
+                        clear();
+                        recreate();
+                    }
                     Toast.makeText(Market.this, result, Toast.LENGTH_SHORT).show();
                 }
                 function = -1;
@@ -355,7 +361,7 @@ public class Market extends AppCompatActivity {
         frame.addView(picpri);
         frame.addView(proinf);
         ll.addView(frame);
-        loading.setVisibility(View.INVISIBLE);
+        loading.setVisibility(View.GONE);
         Log.v("test","card"+ID+"rendered");
     }
 
@@ -366,7 +372,7 @@ public class Market extends AppCompatActivity {
     /////////////////////////////////////////////
 
     public void identifier(String act, int ID,int quantity){
-        MainMenu.BuyAmount = quantity;
+        BuyAmount = quantity;
         BuyId=ID;
         if(act.equals("D")){
             Log.v("test","您正在檢視第"+Pname.get(ID)+"的詳細資料");

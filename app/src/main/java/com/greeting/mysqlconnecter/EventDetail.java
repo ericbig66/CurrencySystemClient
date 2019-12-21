@@ -3,6 +3,7 @@ package com.greeting.mysqlconnecter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,20 +24,23 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Types;
-
-
-import static com.greeting.mysqlconnecter.Event.EventId;
 import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
+import static com.greeting.mysqlconnecter.MainMenu.AactDate;
+import static com.greeting.mysqlconnecter.MainMenu.AactEnd;
+import static com.greeting.mysqlconnecter.MainMenu.AactStart;
+import static com.greeting.mysqlconnecter.MainMenu.Aamount;
 import static com.greeting.mysqlconnecter.MainMenu.AamountLeft;
 import static com.greeting.mysqlconnecter.MainMenu.Actpic;
 import static com.greeting.mysqlconnecter.MainMenu.Adesc;
+import static com.greeting.mysqlconnecter.MainMenu.Aendapp;
 import static com.greeting.mysqlconnecter.MainMenu.Aid;
 import static com.greeting.mysqlconnecter.MainMenu.Aname;
 import static com.greeting.mysqlconnecter.MainMenu.Areward;
 import static com.greeting.mysqlconnecter.MainMenu.Avendor;
+import static com.greeting.mysqlconnecter.MainMenu.EventId;
 import static com.greeting.mysqlconnecter.MainMenu.attended;
 
 
@@ -94,8 +98,6 @@ public class EventDetail extends AppCompatActivity {
     }
 
     void Buyer() {
-        //if(btnBuy.getText().toString().equals("參加")){btnBuy.setText("取消報名");}
-        //else{btnBuy.setText("參加");}
         ConnectMySql connectMySql = new ConnectMySql();
         connectMySql.execute("");
     }
@@ -142,11 +144,34 @@ public class EventDetail extends AppCompatActivity {
                     btnBuy.setText("參加");
                 }
                 Toast.makeText(EventDetail.this, result, Toast.LENGTH_SHORT).show();
+                if(result.equals("報名成功")||result.equals("已取消報名")){
+                    clear();
+                    Intent intent = new Intent(EventDetail.this, Event.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }catch (Exception e){
                 Log.v("test","錯誤: "+e.toString());
             }
 
         }
+    }
+
+    public void clear(){
+        Aid.clear();
+        Aname.clear();
+        Areward.clear();
+        Aamount.clear();
+        AamountLeft.clear();
+        Adesc.clear();
+        Avendor.clear();
+        Aendapp.clear();
+        AactDate.clear();
+        AactStart.clear();
+        AactEnd.clear();
+        Actpic.clear();
+        attended.clear();
     }
 
     //隱藏鍵盤

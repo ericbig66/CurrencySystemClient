@@ -42,7 +42,7 @@ public class MainMenu extends AppCompatActivity {
     public static ArrayList<String> Vendor = new ArrayList<>();
     public static ArrayList<String> PIMG = new ArrayList<>();
 
-    public static int BuyAmount = 0;
+    public static int BuyAmount = 0 , BuyId=-1;
 
     //Event
     public static ArrayList<String> Aid = new ArrayList<>();
@@ -59,6 +59,7 @@ public class MainMenu extends AppCompatActivity {
     public static ArrayList<String> Actpic = new ArrayList<>();
     public static ArrayList<String> attended = new ArrayList<>();
 
+    public static int  EventId=-1;
     //
 
     public void execute(View v){

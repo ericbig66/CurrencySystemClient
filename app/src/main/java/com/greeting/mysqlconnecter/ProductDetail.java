@@ -30,13 +30,14 @@ import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
 import static com.greeting.mysqlconnecter.MainMenu.BuyAmount;
+import static com.greeting.mysqlconnecter.MainMenu.BuyId;
 import static com.greeting.mysqlconnecter.MainMenu.PID;
 import static com.greeting.mysqlconnecter.MainMenu.PIMG;
 import static com.greeting.mysqlconnecter.MainMenu.Pamount;
 import static com.greeting.mysqlconnecter.MainMenu.Pname;
 import static com.greeting.mysqlconnecter.MainMenu.Pprice;
 import static com.greeting.mysqlconnecter.MainMenu.Vendor;
-import static com.greeting.mysqlconnecter.Market.BuyId;
+
 
 
 public class ProductDetail extends AppCompatActivity {

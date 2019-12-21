@@ -48,6 +48,7 @@ import static com.greeting.mysqlconnecter.MainMenu.Aid;
 import static com.greeting.mysqlconnecter.MainMenu.Aname;
 import static com.greeting.mysqlconnecter.MainMenu.Areward;
 import static com.greeting.mysqlconnecter.MainMenu.Avendor;
+import static com.greeting.mysqlconnecter.MainMenu.EventId;
 import static com.greeting.mysqlconnecter.MainMenu.attended;
 
 public class Event extends AppCompatActivity {
@@ -58,7 +59,7 @@ public class Event extends AppCompatActivity {
 
     LinearLayout ll;
     ScrollView sv;
-    public static int cardCounter = 0, EventId=-1, BuyQuantity=0;
+    public static int cardCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +153,11 @@ public class Event extends AppCompatActivity {
                 }
                 else if(function == 1){
                     Toast.makeText(Event.this, result, Toast.LENGTH_SHORT).show();
+                    if(result.equals("報名成功")||result.equals("已取消報名")){
+                        clear();
+                        recreate();
+                        //Intent intent = new Intent(Event.this,)
+                    }
                 }
                 function = -1;
             }catch (Exception e){
@@ -344,6 +350,22 @@ public class Event extends AppCompatActivity {
         }
     }
 
+    public void clear(){
+        Aid.clear();
+        Aname.clear();
+        Areward.clear();
+        Aamount.clear();
+        AamountLeft.clear();
+        Adesc.clear();
+        Avendor.clear();
+        Aendapp.clear();
+        AactDate.clear();
+        AactStart.clear();
+        AactEnd.clear();
+        Actpic.clear();
+        attended.clear();
+    }
+
     //隱藏鍵盤
     public void closekeybord() {
         View view = this.getCurrentFocus();
@@ -356,19 +378,7 @@ public class Event extends AppCompatActivity {
     public void onBackPressed(){
         Intent intent = new Intent(Event.this, MainMenu.class);
         startActivity(intent);
-         Aid.clear();
-         Aname.clear();
-         Areward.clear();
-         Aamount.clear();
-         AamountLeft.clear();
-         Adesc.clear();
-         Avendor.clear();
-         Aendapp.clear();
-         AactDate.clear();
-         AactStart.clear();
-         AactEnd.clear();
-         Actpic.clear();
-         attended.clear();
+        clear();
         finish();
     }
 
