@@ -297,8 +297,8 @@ public class Event extends AppCompatActivity {
         buybtn.setLayoutParams(buybtnp);
         buybtn.setId(5*ID+4);
         buybtn.setOnClickListener(v -> {
-            if(buybtn.getText().toString().equals("參加")){buybtn.setText("取消報名");}
-            else{buybtn.setText("參加");}
+//            if(buybtn.getText().toString().equals("參加")){buybtn.setText("取消報名");}
+//            else{buybtn.setText("參加");}
             final int id = ID;
             closekeybord();
             identifier("B",id);
