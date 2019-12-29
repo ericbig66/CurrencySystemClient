@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
     public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     public static final String user = "currency";
     public static final String pass = "@SAclass";
-    String pfs;//profile String
+    public static String pfs;//profile String
     public static Bitmap pf;//profile picture
     public static float pfr;//profile rotation
 //    public static String wcm;//welcome message
@@ -165,7 +165,6 @@ public class Login extends AppCompatActivity {
                 acc=account;
                 Toast.makeText(Login.this, "請稍後", Toast.LENGTH_SHORT).show();
                 Log.v("test",result);
-                pfs="";
                 swmenu();
             }
 

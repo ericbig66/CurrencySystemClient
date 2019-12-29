@@ -13,10 +13,11 @@ tools:context=".Purchase">
     android:layout_height="400dp"
     android:layout_weight="0" />
 
-<Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_weight="0"
-    android:text="Button" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Button"
+        android:visibility="gone" />
 </LinearLayout>

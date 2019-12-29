@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
+    android:background="@drawable/melon"
+    android:backgroundTint="@color/colorAccent"
+    android:backgroundTintMode="add"
     android:gravity="center|center_horizontal"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".Login">
 
 
@@ -82,11 +85,8 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
     </ScrollView>
-
 
 
 </LinearLayout>

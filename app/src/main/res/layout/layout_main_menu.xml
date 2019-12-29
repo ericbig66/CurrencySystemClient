@@ -51,6 +51,15 @@
                 android:textSize="20sp" />
 
             <Button
+                android:id="@+id/alter_member"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:onClick="execute"
+                android:text="會員中心"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/Event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

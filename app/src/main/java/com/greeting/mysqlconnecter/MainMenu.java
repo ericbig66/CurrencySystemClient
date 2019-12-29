@@ -79,6 +79,9 @@ public class MainMenu extends AppCompatActivity {
             case R.id.Event:
                 intent = new Intent(MainMenu.this, Event.class);
                 break;
+            case R.id.alter_member:
+                intent = new Intent(MainMenu.this, AlterMember.class);
+                break;
         }
         startActivity(intent);
         finish();
