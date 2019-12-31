@@ -72,11 +72,8 @@ public class Market extends AppCompatActivity {
         ll = findViewById(R.id.ll);
         sv = findViewById(R.id.sv);
 
-        sv.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                // closekeybord();
-            }
+        sv.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            // closekeybord();
         });
 
         ConnectMySql connectMySql = new ConnectMySql();
@@ -104,7 +101,7 @@ public class Market extends AppCompatActivity {
                     //建立查詢
                     String result = "";
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("select * from product");
+                    ResultSet rs = st.executeQuery("select * from product where amount > 0");
 
                     while (rs.next()) {
                         PID.add(rs.getString("productID"));
