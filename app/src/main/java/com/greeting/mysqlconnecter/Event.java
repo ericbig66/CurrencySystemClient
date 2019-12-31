@@ -92,7 +92,17 @@ public class Event extends AppCompatActivity {
                     //建立查詢
                     String result = "";
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("select * from activity");
+                    attended.clear();
+                    ResultSet rs = st.executeQuery("select activity from attendlist where account = '"+acc+"'");
+                    //
+                    String att="";
+                    while(rs.next()){
+                        attended.add(rs.getString("activity"));
+                        att += "'"+rs.getString("activity")+"', ";
+                    }
+                    att = att.isEmpty()? att: att.substring(0,att.length()-2);
+                    Log.v("test", "query = "+"select * from activity where activityNumber in("+att +") or endApply >= curdate()");
+                    rs = st.executeQuery("select * from activity where activityNumber in("+att +") and actDate>=curdate() or endApply >= curdate()");
 
                     while (rs.next()) {
                         Aid.add(rs.getString("activityNumber"));
@@ -109,9 +119,8 @@ public class Event extends AppCompatActivity {
                         Actpic.add(rs.getString("actpic"));
                     }
 
-                    attended.clear();
-                    rs = st.executeQuery("select activity from attendlist where account = '"+acc+"'");
-                    while(rs.next()){attended.add(rs.getString("activity"));}
+
+
 
                     return Aname.size() + "";//回傳結果給onPostExecute==>取得輸出變數(位置)
 
