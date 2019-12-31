@@ -104,8 +104,8 @@ public class Event extends AppCompatActivity {
                         Avendor.add(rs.getString("vendor"));
                         Aendapp.add(rs.getDate("endApply"));
                         AactDate.add(rs.getDate("actDate"));
-                        AactStart.add(rs.getDate("actStart"));
-                        AactEnd.add(rs.getDate("actEnd"));
+                        AactStart.add(rs.getTime("actStart"));
+                        AactEnd.add(rs.getTime("actEnd"));
                         Actpic.add(rs.getString("actpic"));
                     }
 

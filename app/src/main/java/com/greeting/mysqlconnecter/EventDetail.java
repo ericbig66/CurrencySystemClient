@@ -88,7 +88,7 @@ public class EventDetail extends AppCompatActivity {
         txtName.setText(Aname.get(EventId));
 
         TextView txtVdrName=findViewById(R.id.txtVdrName);
-        txtVdrName.setText("主辦廠商: "+Avendor.get(EventId)+"\n活動名稱: "+Aname.get(EventId)+"\n剩餘名額: "+AamountLeft.get(EventId)+"人\n回饋金額: $"+Areward.get(EventId)+"\n活動說明:\n"+Adesc.get(EventId));
+        txtVdrName.setText("主辦廠商: "+Avendor.get(EventId)+"\n活動名稱: "+Aname.get(EventId)+"\n剩餘名額: "+AamountLeft.get(EventId)+"人\n回饋金額: $"+Areward.get(EventId)+"\n活動時間:"+AactDate.get(EventId)+"\n　　　　 "+AactStart.get(EventId)+"~"+AactEnd.get(EventId)+"\n報名截止:"+Aendapp.get(EventId)+"\n活動說明:\n"+Adesc.get(EventId));
 
 
         btnBuy = findViewById(R.id.btnBuy);

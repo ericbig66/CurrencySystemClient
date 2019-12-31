@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:paddingTop="20dp"
-        android:text="TextView"
+        android:text="載入中...\n若30秒內無法載入請聯絡客服人員"
         android:textSize="20sp" />
 
     <ScrollView
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:onClick="execute"
-                android:text="收取樂幣"
+                android:text="收取樂幣&amp;簽到"
                 android:textSize="20sp" />
 
             <Button
