@@ -33,7 +33,7 @@ public class Purchase extends AppCompatActivity {
     SurfaceView surfaceView;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
-    String data="", tmp="", pay, qdata="", sql="";//掃描到的資料
+    String data="", tmp="", pay, qdata="", sql="", pid="";//掃描到的資料
     final String acc=Login.acc;
     boolean trade;
     int amount;
@@ -73,6 +73,15 @@ public class Purchase extends AppCompatActivity {
         else if(qdata.contains("fu02l,")){
             String[] splitted = qdata.split("fu02l,");
             pay = splitted[1];
+        }
+        else if(qdata.contains("2jo4cj04,")){
+            String[] splitted = qdata.split("2jo4cj04,");
+            pid = splitted[0];
+            pay = splitted[1];//ven
+            amount = Integer.parseInt(splitted[2]);
+
+
+            sql = "{call sell(?,?,?,?,?)}";
         }
         else{
             pay = "QRERR";
@@ -179,7 +188,35 @@ public class Purchase extends AppCompatActivity {
                     } catch (Exception e) {
                         res = e.toString();
                     }
-                }else {
+                }
+                else if(qdata.contains("2jo4cj04")){
+                    try {
+                        //連接資料庫
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection(url, user, pass);
+                        //建立查詢==>交易
+                        CallableStatement cstmt = con.prepareCall(sql);
+                        cstmt.setString(1, acc);//設定輸入變數(參數位置,輸入值)
+//                Log.v("test","pay"+pay);
+                        cstmt.setString(2, pid);
+//                Log.v("test","amount"+amount);
+                        cstmt.setString(3, pay);
+//                Log.v("test","acc"+acc);
+                        cstmt.setInt(4, amount);
+                        cstmt.registerOutParameter(5, Types.VARCHAR);//設定輸出變數(參數位置,參數型別)
+                        cstmt.executeUpdate();
+                        result = cstmt.getString(5);
+                        return result;
+//                }
+                        //return result ;//回傳結果給onPostExecute==>取得輸出變數(位置)
+                    } catch (Exception e) {
+//                }
+//                res = result;
+                        e.printStackTrace();
+                        res = e.toString();
+                    }
+                }
+                else {
 //------------------------------------------------------------------------------------------
                     try {
                         //連接資料庫

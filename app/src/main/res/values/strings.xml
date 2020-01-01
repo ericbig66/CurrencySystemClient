@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MySQLconnecter</string>
+    <string name="app_name">樂齡俱樂部</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
