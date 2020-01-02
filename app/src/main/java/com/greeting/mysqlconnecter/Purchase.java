@@ -29,12 +29,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
 
+import static com.greeting.mysqlconnecter.Login.acc;
+
 public class Purchase extends AppCompatActivity {
     SurfaceView surfaceView;
     BarcodeDetector barcodeDetector;
     CameraSource cameraSource;
     String data="", tmp="", pay, qdata="", sql="", pid="";//掃描到的資料
-    final String acc=Login.acc;
+
     boolean trade;
     int amount;
 
@@ -79,13 +81,12 @@ public class Purchase extends AppCompatActivity {
             pid = splitted[0];
             pay = splitted[1];//ven
             amount = Integer.parseInt(splitted[2]);
-
-
             sql = "{call sell(?,?,?,?,?)}";
         }
         else{
             pay = "QRERR";
             amount = 0;
+            sql = "{call tradeV(?,?,?,?)}";
         }
 
     }

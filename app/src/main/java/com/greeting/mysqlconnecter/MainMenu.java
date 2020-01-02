@@ -74,7 +74,7 @@ public class MainMenu extends AppCompatActivity {
                 intent = new Intent(MainMenu.this, Market.class);
                 break;
             case R.id.diary:
-                intent = new Intent(MainMenu.this, Diary.class);
+                intent = new Intent(MainMenu.this, newDiary.class);
                 break;
             case R.id.Event:
                 intent = new Intent(MainMenu.this, Event.class);

@@ -10,8 +10,8 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_market">market</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="buy">購物紀錄</string>
+    <string name="redEnvelope">樂幣交易紀錄</string>
     <string name="greeting">您好，歡迎來到樂幣系統\n我是小樂\n我會帶著你一起進入樂幣世界\n請問我該如何稱呼您呢?</string>
     <string name="nickname">您可以使用綽號喔!</string>
     <string name="nickname_err">母湯喔!小頑皮告訴我你的綽號嘛!</string>
@@ -34,5 +34,9 @@
     <string name="get_profile">最後，我需要張你最好看的照片</string>
     <string name="profile_err">拜託啦!給我一張你的照片</string>
     <string name="success">接下來讓我們來確認一下\n這些資料正不正確\n如果有不正確\n請幫我修改一下\n如果資料都正確\n請按下註冊按鈕就完成囉!</string>
+    <string name="title_activity_new_diary">交易紀錄</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

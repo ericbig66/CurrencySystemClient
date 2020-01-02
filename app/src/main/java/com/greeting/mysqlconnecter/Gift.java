@@ -41,7 +41,7 @@ public class Gift extends AppCompatActivity {
         Log.v("test",Login.acc+"zpek," +amount .getText().toString());
         try{
             Bitmap bit = encoder.encodeBitmap(Login.acc+"zpek," +amount .getText().toString()
-                    , BarcodeFormat.QR_CODE,300,300);
+                    , BarcodeFormat.QR_CODE,1000,1000);
             qrCode.setImageBitmap(bit);
         }catch (WriterException e){
             e.printStackTrace();

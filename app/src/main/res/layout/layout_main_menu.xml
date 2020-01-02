@@ -55,7 +55,7 @@
             <Button
                 android:id="@+id/market"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:onClick="execute"
                 android:text="進入賣場"
@@ -68,7 +68,7 @@
             <Button
                 android:id="@+id/alter_member"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:onClick="execute"
                 android:text="會員中心"
@@ -81,7 +81,7 @@
             <Button
                 android:id="@+id/Event"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:onClick="execute"
                 android:text="活動報名"
@@ -94,7 +94,7 @@
             <Button
                 android:id="@+id/diary"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:onClick="execute"
                 android:text="日記簿"
@@ -107,7 +107,7 @@
             <Button
                 android:id="@+id/getcoin"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:minHeight="0dp"
                 android:onClick="execute"
@@ -121,7 +121,7 @@
             <Button
                 android:id="@+id/paycoin"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:onClick="execute"
                 android:text="送紅包"
