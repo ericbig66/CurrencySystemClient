@@ -21,7 +21,7 @@
     <string name="name_err">拜託嘛!人家想知道</string>
     <string name="get_mail">請問您是否有電子信箱呢?</string>
     <string name="mail">請輸入您的電子信箱</string>
-    <string name="acc">在此設定您的帳戶名稱</string>
+    <string name="acc">請設定您的帳戶名稱</string>
     <string name="rem_acc_nomail">這組是你的帳號:</string>
     <string name="rem_acc">記得喔!電子信箱就是您的帳號</string>
     <string name="acc_err">母湯喔!要先新建帳號才能管理樂幣呀!</string>

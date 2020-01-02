@@ -65,7 +65,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
 
                 <Button
                     android:id="@+id/btnFetch"
@@ -73,13 +74,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
+                    android:background="@drawable/rounded_button"
                     android:text="登入" />
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:layout_weight="0"
+                    android:background="@drawable/rounded_button"
                     android:text="清除" />
 
                 <Button
@@ -87,6 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
+                    android:background="@drawable/rounded_button"
                     android:text="加入會員" />
             </LinearLayout>
 

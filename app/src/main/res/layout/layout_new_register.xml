@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:ems="10"
+                    android:ems="8"
                     android:gravity="center_horizontal"
                     android:inputType="textPersonName"
                     android:textAlignment="center"
@@ -118,6 +118,7 @@
                     android:id="@+id/build"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button"
                     android:text="建立"
                     android:textSize="24sp"
                     android:visibility="gone" />
@@ -147,6 +148,7 @@
                 android:id="@+id/proBtns"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/rounded_button"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -154,7 +156,9 @@
                     android:id="@+id/upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
                     android:text="點我上傳頭像"
                     android:textSize="24sp" />
 
@@ -162,6 +166,8 @@
                     android:id="@+id/rotate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/rounded_button"
                     android:text="旋轉頭像"
                     android:textSize="24sp"
                     android:visibility="gone" />
@@ -178,6 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
+                    android:background="@drawable/rounded_button"
                     android:onClick="previous"
                     android:text="上一步"
                     android:textSize="24sp" />
@@ -187,6 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:background="@drawable/rounded_button"
                     android:onClick="verifier"
                     android:text="下一步"
                     android:textSize="24sp" />

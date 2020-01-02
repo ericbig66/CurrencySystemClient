@@ -188,14 +188,15 @@ public class Market extends AppCompatActivity {
         LinearLayout.LayoutParams framep = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 DP(150)
+
         );
 
 
         frame.setPadding(DP(15),DP(15),DP(15),DP(15));
         framep.setMargins(0,0,0,DP(20));
         frame.setOrientation(LinearLayout.HORIZONTAL);
-        frame.setBackgroundColor(Color.WHITE);
         frame.setLayoutParams(framep);
+        frame.setBackgroundColor(Color.parseColor("#D1FFDE"));
 
         //圖片&價格區
         LinearLayout picpri = new LinearLayout(this);
@@ -290,37 +291,38 @@ public class Market extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
+        btnboxp.setMargins(0,20,0,0);
         btnbox.setLayoutParams(btnboxp);
 
 
         //詳情按鈕
         Button detail = new Button(this);
         LinearLayout.LayoutParams detailp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,0.5f
         );
+        detailp.setMarginEnd(20);
         detail.setText("詳情");
         detail.setTextSize(18f);
         detail.setLayoutParams(detailp);
         detail.setId(5*ID+3);
-        detail.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                final int id = ID;
-                if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
-                final int quantity = Integer.parseInt(amount.getText().toString());
-                closekeybord();
-                identifier("D",id,quantity);
-            }
+        detail.setBackgroundResource(R.drawable.rounded_button_pink);
+        detail.setOnClickListener(v -> {
+            final int id = ID;
+            if(amount.getText().toString().trim().isEmpty()){amount.setText("0");}
+            final int quantity = Integer.parseInt(amount.getText().toString());
+            closekeybord();
+            identifier("D",id,quantity);
         });
 
         //訂購按鈕
         Button buybtn = new Button(this);
         LinearLayout.LayoutParams buybtnp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,0.5f
         );
+
+        buybtn.setBackgroundResource(R.drawable.rounded_button_pink);
         buybtn.setText("訂購");
         buybtn.setTextSize(18f);
         buybtn.setLayoutParams(buybtnp);

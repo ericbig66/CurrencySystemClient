@@ -117,7 +117,9 @@
                     android:id="@+id/btnBuy"
                     android:layout_width="142dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="0.4"
+                    android:background="@drawable/rounded_button"
                     android:text="訂購商品" />
             </LinearLayout>
 

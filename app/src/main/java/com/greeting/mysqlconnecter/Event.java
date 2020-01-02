@@ -194,11 +194,10 @@ public class Event extends AppCompatActivity {
                 DP(150)
         );
 
-
+        frame.setBackgroundColor(Color.parseColor("#D1FFDE"));
         frame.setPadding(DP(15),DP(15),DP(15),DP(15));
         framep.setMargins(0,0,0,DP(20));
         frame.setOrientation(LinearLayout.HORIZONTAL);
-        frame.setBackgroundColor(Color.WHITE);
         frame.setLayoutParams(framep);
 
         //圖片&價格區
@@ -275,15 +274,18 @@ public class Event extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT
         );
+        btnboxp.setMargins(0,20,0,0);
         btnbox.setLayoutParams(btnboxp);
 
 
         //詳情按鈕
         Button detail = new Button(this);
         LinearLayout.LayoutParams detailp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,0.5f
         );
+        detailp.setMarginEnd(10);
+        detail.setBackgroundResource(R.drawable.rounded_button_pink);
         detail.setText("詳情");
         detail.setTextSize(18f);
         detail.setLayoutParams(detailp);
@@ -297,9 +299,10 @@ public class Event extends AppCompatActivity {
         //參加按鈕
         Button buybtn = new Button(this);
         LinearLayout.LayoutParams buybtnp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,0.5f
         );
+        buybtn.setBackgroundResource(R.drawable.rounded_button_pink);
         if(attended.contains(Aid.get(ID))){buybtn.setText("取消報名");}
         else{buybtn.setText("參加");}
         buybtn.setTextSize(18f);

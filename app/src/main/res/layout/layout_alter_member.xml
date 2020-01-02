@@ -288,13 +288,17 @@
                     android:id="@+id/pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
                     android:text="更換頭像" />
 
                 <Button
                     android:id="@+id/rotate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/rounded_button"
                     android:text="旋轉頭像"
                     android:visibility="visible" />
 
@@ -304,12 +308,16 @@
                 android:id="@+id/reg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_button"
                 android:text="確定修改" />
 
             <Button
                 android:id="@+id/clr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_button"
                 android:text="放棄修改" />
 
         </LinearLayout>
