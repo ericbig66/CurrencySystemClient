@@ -23,12 +23,20 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".AlterMember" />
         <activity android:name=".EventDetail" />
-        <activity android:name=".Event" />
+        <activity
+            android:name=".Event"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ProductDetail" />
-        <activity android:name=".Market" />
+        <activity
+            android:name=".Market"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".NewRegister" />
         <activity android:name=".Diary" />
-        <activity android:name=".MainMenu" />
+        <activity android:name=".MainMenu"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".Purchase" />
         <activity android:name=".Gift" />
         <activity android:name=".Register" />

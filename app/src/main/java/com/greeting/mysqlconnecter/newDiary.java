@@ -1,5 +1,6 @@
 package com.greeting.mysqlconnecter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,5 +28,10 @@ public class newDiary extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+    }
+
+    public void onBackPressed() {
+        Intent intent = new Intent(newDiary.this, MainMenu.class);
+        startActivity(intent);
     }
 }
