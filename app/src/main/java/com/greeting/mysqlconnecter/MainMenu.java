@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Timer;
 
 import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.rc;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
 
@@ -31,6 +32,8 @@ public class MainMenu extends AppCompatActivity {
     ImageView profile;
     final String acc = Login.acc;
     int obp = 0; //times of on back pressed
+
+
 
     //array list 寄放區
 
@@ -96,6 +99,7 @@ public class MainMenu extends AppCompatActivity {
             Intent intent = new Intent(MainMenu.this, Login.class);
             startActivity(intent);
             Login.pf = null;
+            rc = 0;
             finish();
         }
         else{
@@ -106,6 +110,7 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 //        Intent intent = getIntent();
 //        String msg = intent.getStringExtra("msg");
 //        String msg = Login.wcm;
@@ -121,6 +126,7 @@ public class MainMenu extends AppCompatActivity {
 
         ConnectMySql connectMySql = new ConnectMySql();
         connectMySql.execute("");
+
     }
 
     //建立連接與查詢非同步作業
@@ -130,6 +136,7 @@ public class MainMenu extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+
             Toast.makeText(MainMenu.this,"請稍後...",Toast.LENGTH_SHORT).show();
         }
         //查詢執行動作(不可使用與UI相關的指令)
@@ -158,7 +165,13 @@ public class MainMenu extends AppCompatActivity {
         //查詢後的結果將回傳於此
         @Override
         protected void onPostExecute(String result) {
+            if(rc<=0){recreate();rc++;}
+
+
             wmsg.setText(result);
+            Log.v("test","market = "+findViewById(R.id.market).getHeight());
+            Log.v("test","getcoin = "+findViewById(R.id.getcoin).getHeight());
+            Log.v("test","diary = "+findViewById(R.id.diary).getHeight());
         }
     }
 
