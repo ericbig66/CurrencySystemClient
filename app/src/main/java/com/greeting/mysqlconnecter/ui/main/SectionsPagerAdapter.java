@@ -12,8 +12,6 @@ import com.greeting.mysqlconnecter.BuyDiary;
 import com.greeting.mysqlconnecter.R;
 import com.greeting.mysqlconnecter.RedEnvelopeDiary;
 
-import java.io.BufferedReader;
-
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
