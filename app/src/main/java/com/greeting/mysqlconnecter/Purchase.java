@@ -30,6 +30,9 @@ import java.sql.Statement;
 import java.sql.Types;
 
 import static com.greeting.mysqlconnecter.Login.acc;
+import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.url;
+import static com.greeting.mysqlconnecter.Login.user;
 
 public class Purchase extends AppCompatActivity {
     SurfaceView surfaceView;
@@ -40,10 +43,7 @@ public class Purchase extends AppCompatActivity {
     boolean trade;
     int amount;
 
-    //連接資料庫的IP、帳號(不可用root)、密碼
-    private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
-    private static final String user = "currency";
-    private static final String pass = "@SAclass";
+
 
     public void onBackPressed(){
         Intent intent = new Intent(Purchase.this, MainMenu.class);

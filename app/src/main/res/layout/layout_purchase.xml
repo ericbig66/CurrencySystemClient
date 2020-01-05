@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
-        android:text="您可以透過掃描QRcod\n完成活動簽到、收取紅包\n或兌換現場商品"
+        android:text="您可以透過掃描QRcode\n完成活動簽到、收取紅包\n或兌換現場商品"
         android:textSize="25sp" />
 
     <SurfaceView

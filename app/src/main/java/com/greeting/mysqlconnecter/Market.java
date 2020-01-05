@@ -34,6 +34,9 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import static com.greeting.mysqlconnecter.Login.acc;
+import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.url;
+import static com.greeting.mysqlconnecter.Login.user;
 import static com.greeting.mysqlconnecter.MainMenu.BuyAmount;
 import static com.greeting.mysqlconnecter.MainMenu.BuyId;
 import static com.greeting.mysqlconnecter.MainMenu.PID;
@@ -46,11 +49,6 @@ import static com.greeting.mysqlconnecter.MainMenu.Vendor;
 public class Market extends AppCompatActivity {
     TextView loading;
 
-
-    //連接資料庫的IP、帳號(不可用root)、密碼
-    private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
-    private static final String user = "currency";
-    private static final String pass = "@SAclass";
 
     //array list 已移至 main menu
 

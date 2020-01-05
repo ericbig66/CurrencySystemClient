@@ -100,9 +100,9 @@ public class Event extends AppCompatActivity {
                         attended.add(rs.getString("activity"));
                         att += "'"+rs.getString("activity")+"', ";
                     }
-                    att = att.isEmpty()? att: att.substring(0,att.length()-2);
-                    Log.v("test", "query = "+"select * from activity where activityNumber in("+att +") and endApply >= curdate()");
-                    rs = st.executeQuery("select * from activity where activityNumber in("+att +") and actDate>=curdate() or endApply >= curdate()");
+                    att = att.isEmpty()? "null": att.substring(0,att.length()-2);
+                    Log.v("test", "query = "+"select * from activity where activityNumber in("+att +") and actDate >= curdate() or endApply >= curdate()");
+                    rs = st.executeQuery("select * from activity where activityNumber in("+att +") and actDate >= curdate() or endApply >= curdate()");
 
                     while (rs.next()) {
                         Aid.add(rs.getString("activityNumber"));

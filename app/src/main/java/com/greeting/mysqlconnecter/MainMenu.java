@@ -137,7 +137,7 @@ public class MainMenu extends AppCompatActivity {
         protected void onPreExecute(){
             super.onPreExecute();
 
-            Toast.makeText(MainMenu.this,"請稍後...",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainMenu.this,"請稍後...",Toast.LENGTH_SHORT).show();
         }
         //查詢執行動作(不可使用與UI相關的指令)
         @Override

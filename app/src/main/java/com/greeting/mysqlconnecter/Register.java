@@ -30,12 +30,14 @@ import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.url;
+import static com.greeting.mysqlconnecter.Login.user;
+
 
 public class Register extends AppCompatActivity {
 
-    private static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
-    private static final String user = "currency";
-    private static final String pass = "@SAclass";
+
     static final int OPEN_PIC = 1021;
 
     EditText ln, fn, em, bd, ad, pwd, chkpwd;

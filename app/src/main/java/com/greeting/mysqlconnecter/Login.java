@@ -166,7 +166,7 @@ public class Login extends AppCompatActivity {
             else{
                 data = result;
                 acc=account;
-                Toast.makeText(Login.this, "請稍後", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Login.this, "請稍後", Toast.LENGTH_SHORT).show();
                 Log.v("test",result);
                 swmenu();
             }
