@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
@@ -35,7 +36,7 @@ public class RedEnvelopeDiary extends Fragment {
     private ArrayList<String> amount = new ArrayList<>();
     private ArrayList<String> remain = new ArrayList<>();
 
-    String acc;
+
     TextView dt;
     TableLayout tradeData;
 
@@ -53,7 +54,7 @@ public class RedEnvelopeDiary extends Fragment {
 
         // Inflate the layout for this fragment///////////////////////////////////
         View view = inflater.inflate(R.layout.fragment_new_diary, container, false);
-        acc = Login.acc;
+
         tradeData = view.findViewById(R.id.tradeData);
         ioacc.add("對方帳戶　　");
         trade.add("交易方向　　");

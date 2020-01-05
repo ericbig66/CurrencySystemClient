@@ -14,12 +14,13 @@ import android.widget.ImageView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import static com.greeting.mysqlconnecter.Login.acc;
 
 public class Gift extends AppCompatActivity {
     Button pay;
     EditText amount;
     ImageView qrCode;
-    final String acc =Login.acc;
+
 
     public void onBackPressed(){
         Intent intent = new Intent(Gift.this, MainMenu.class);
@@ -38,9 +39,9 @@ public class Gift extends AppCompatActivity {
 
     public void getCode(View v) {
         BarcodeEncoder encoder = new BarcodeEncoder();
-        Log.v("test",Login.acc+"zpek," +amount .getText().toString());
+        Log.v("test",acc+"zpek," +amount .getText().toString());
         try{
-            Bitmap bit = encoder.encodeBitmap(Login.acc+"zpek," +amount .getText().toString()
+            Bitmap bit = encoder.encodeBitmap(acc+"zpek," +amount .getText().toString()
                     , BarcodeFormat.QR_CODE,1000,1000);
             qrCode.setImageBitmap(bit);
         }catch (WriterException e){

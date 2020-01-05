@@ -89,7 +89,7 @@ public class BuyDiary extends Fragment {
                 //建立查詢
                 //String result = "對方帳戶\t交易\t金額\t餘額\n";
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select productName, price, amount, sellDate from sellhistory where client ='"+Login.acc+"'");
+                ResultSet rs = st.executeQuery("select productName, price, amount, sellDate from sellhistory where client ='"+acc+"'");
                 //將查詢結果裝入陣列
                 while(rs.next()){
                     //result += rs.getString("paccount")+"\t"+rs.getString("state")+"\t$"+rs.getString("amount")+"\t$"+rs.getString("moneyLeft")+"\n";

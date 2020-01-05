@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 
+import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
+import static com.greeting.mysqlconnecter.Login.pf;
+import static com.greeting.mysqlconnecter.Login.pfr;
 import static com.greeting.mysqlconnecter.Login.rc;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
@@ -30,7 +33,7 @@ public class MainMenu extends AppCompatActivity {
     TextView wmsg;
     Intent intent;
     ImageView profile;
-    final String acc = Login.acc;
+
     int obp = 0; //times of on back pressed
 
 
@@ -95,10 +98,10 @@ public class MainMenu extends AppCompatActivity {
 
         if(obp>=2){
             //Login.wcm ="";
-            Login.acc ="";
+            acc ="";
             Intent intent = new Intent(MainMenu.this, Login.class);
             startActivity(intent);
-            Login.pf = null;
+            pf = null;
             rc = 0;
             finish();
         }
@@ -113,15 +116,15 @@ public class MainMenu extends AppCompatActivity {
 
 //        Intent intent = getIntent();
 //        String msg = intent.getStringExtra("msg");
-//        String msg = Login.wcm;
+//        String msg = wcm;
         setContentView(R.layout.layout_main_menu);
         wmsg = findViewById(R.id.msg);
 //        wmsg.setText(msg);
-//        wmsg.setText(Login.wcm);
+//        wmsg.setText(wcm);
         profile = findViewById(R.id.profile);
         try {
-            profile.setImageBitmap(Login.pf);
-            profile.setRotation(Login.pfr);
+            profile.setImageBitmap(pf);
+            profile.setRotation(pfr);
         }catch (Exception e){}
 
         ConnectMySql connectMySql = new ConnectMySql();
