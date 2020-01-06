@@ -120,13 +120,13 @@ public class Register extends AppCompatActivity {
             CHKPWD = "";
             haveError = true;
         }
-
-        if ( !EM.trim().isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(EM).matches() ) {
-            err += "請輸入正確的電子郵件地址";
-            em.setText("");
-            EM = "";
-            haveError = true;
-        }
+// due to register policy change this verifyer is no longer being used
+//        if ( !EM.trim().isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(EM).matches() ) {
+//            err += "請輸入正確的電子郵件地址";
+//            em.setText("");
+//            EM = "";
+//            haveError = true;
+//        }
         if(haveError && !err.trim().isEmpty()){Toast.makeText(Register.this, err, Toast.LENGTH_LONG).show();}
         if(!haveError){
             ConnectMySql connectMySql = new ConnectMySql();
@@ -278,6 +278,7 @@ public class Register extends AppCompatActivity {
         //頭像角度
         degree = Float.parseFloat(splitter[1]) -90f;
         rotate();
+        NewRegister.data= new String[1]; // 壓縮記憶體空間
     }
 
     Float degree = 0f;

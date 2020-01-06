@@ -197,8 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.9"
                     android:ems="10"
-                    android:hint="E-mail"
-                    android:inputType="textEmailAddress" />
+                    android:hint="電話號碼或手機"
+                    android:inputType="phone" />
 
             </LinearLayout>
 
