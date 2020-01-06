@@ -217,7 +217,7 @@ public class Login extends AppCompatActivity {
 
 
 
-    //建立連接與查詢非同步作業
+    //建立連接與查詢非同步作業(檢查更新)
     private class CheckUpdate extends AsyncTask<String, Void, String> {
         String res="";//錯誤信息儲存變數
 
