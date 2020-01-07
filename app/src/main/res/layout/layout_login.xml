@@ -18,8 +18,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,8 +49,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:ems="10"
-                android:hint="e-mail"
-                android:inputType="textEmailAddress" />
+                android:hint="手機/電話號碼"
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/pwd"
@@ -95,6 +94,17 @@
                     android:background="@drawable/rounded_button"
                     android:text="加入會員" />
             </LinearLayout>
+
+            <Switch
+                android:id="@+id/loginSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="0"
+                android:foregroundGravity="right"
+                android:layoutDirection="ltr"
+                android:text="手機/電話號碼登入" />
 
 
         </LinearLayout>

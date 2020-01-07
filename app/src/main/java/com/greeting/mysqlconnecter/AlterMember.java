@@ -142,12 +142,18 @@ public class AlterMember extends AppCompatActivity {
             haveError = true;
         }
 
-        if (!EM.trim().isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(EM).matches()) {
-            err += "請輸入正確的電子郵件地址";
-            em.setText("");
-            EM = "";
-            haveError = true;
-        }
+//        if (!EM.trim().isEmpty() && !android.util.Patterns.EMAIL_ADDRESS.matcher(EM).matches()) {
+//            err += "請輸入正確的電子郵件地址";
+//            em.setText("");
+//            EM = "";
+//            haveError = true;
+//        }
+
+//        if(!EM.trim().isEmpty() && EM.trim().length()<9){
+//            err += "您的電話或手機號碼格式不正確!";
+//
+//        }
+
         if (haveError && !err.trim().isEmpty()) {
             Toast.makeText(AlterMember.this, err, Toast.LENGTH_LONG).show();
         }
@@ -378,6 +384,7 @@ public class AlterMember extends AppCompatActivity {
             if (result.equals("修改成功!")) {
                 Toast.makeText(AlterMember.this, result, Toast.LENGTH_SHORT).show();
                 clear();
+                ((BitmapDrawable)profile.getDrawable()).getBitmap().recycle();
                 finish();
             }else if(function == 0){
                 autofillData = result;

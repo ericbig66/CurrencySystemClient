@@ -16,7 +16,7 @@
     <string name="nickname">您可以使用綽號喔!</string>
     <string name="nickname_err">母湯喔!小頑皮告訴我你的綽號嘛!</string>
     <string name="get_birthday">能告訴我妳的生日嗎?(選填)</string>
-    <string name="get_gender">方便告訴我你的性別嗎?</string>
+    <string name="get_gender">方便告訴我你的性別嗎?(選填)</string>
     <string name="get_name">能告訴我你叫什麼名子嗎?</string>
     <string name="name_err">拜託嘛!人家想知道</string>
     <string name="get_mail">請問您是否有電子信箱呢?</string>

@@ -127,6 +127,10 @@ public class Register extends AppCompatActivity {
 //            EM = "";
 //            haveError = true;
 //        }
+        if(!EM.trim().isEmpty() && EM.trim().length()<9){
+            err += "您的電話或手機號碼格式不正確!";
+            haveError = true;
+        }
         if(haveError && !err.trim().isEmpty()){Toast.makeText(Register.this, err, Toast.LENGTH_LONG).show();}
         if(!haveError){
             ConnectMySql connectMySql = new ConnectMySql();

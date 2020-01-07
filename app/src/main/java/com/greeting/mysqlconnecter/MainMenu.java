@@ -86,6 +86,9 @@ public class MainMenu extends AppCompatActivity {
             case R.id.alter_member:
                 intent = new Intent(MainMenu.this, AlterMember.class);
                 break;
+            case R.id.contact:
+                intent = new Intent(MainMenu.this, contactUS.class);
+                break;
         }
         startActivity(intent);
         finish();
@@ -173,7 +176,7 @@ public class MainMenu extends AppCompatActivity {
             Log.v("test","market = "+findViewById(R.id.market).getHeight());
             Log.v("test","getcoin = "+findViewById(R.id.getcoin).getHeight());
             Log.v("test","diary = "+findViewById(R.id.diary).getHeight());
-        }
+}
     }
 
 }

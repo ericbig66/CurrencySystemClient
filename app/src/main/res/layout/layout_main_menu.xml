@@ -35,16 +35,31 @@
             app:civ_shadow_radius="10"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <TextView
-            android:id="@+id/msg"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingRight="10dp"
-            android:text="載入中...\n若30秒內無法載入請聯絡客服人員"
-            android:textSize="20sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingRight="10dp"
+                android:text="載入中...\n您的網路訊號不穩定\n或您已中斷連線"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@drawable/rounded_button_pink"
+                android:onClick="execute"
+                android:text="聯絡\n我們" />
+        </LinearLayout>
 
         <androidx.gridlayout.widget.GridLayout
             android:layout_width="match_parent"

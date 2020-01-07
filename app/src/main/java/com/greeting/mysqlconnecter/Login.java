@@ -9,12 +9,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +38,7 @@ import static android.app.PendingIntent.getActivity;
 public class Login extends AppCompatActivity {
     //render bug resolver
     public static int rc = 0;
-    final float VERSION = 0.2f;
+    final float VERSION = 0.3f;
     //連接資料庫的IP、帳號(不可用root)、密碼
     public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     public static final String user = "currency";
@@ -49,8 +53,7 @@ public class Login extends AppCompatActivity {
     TextView txtData;
     EditText myacc, pwd;
     String account, password, data;
-
-
+    Switch LoginSwitch;
 
     public void swreg(){  //切換註冊頁面
         Intent intent = new Intent(this, NewRegister.class);
@@ -71,6 +74,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login);
 
+        LoginSwitch = findViewById(R.id.loginSwitch);//新舊版登入模式切換
         btnFetch = findViewById(R.id.btnFetch);//登入
         btnClear = findViewById(R.id.btnClear);//清除
         reg = findViewById(R.id.reg);//切換到註冊頁面
@@ -78,6 +82,18 @@ public class Login extends AppCompatActivity {
         myacc = findViewById(R.id.acc);//帳號(Email)
         pwd = findViewById(R.id.pwd);//密碼
 //        dtv = findViewById(R.id.dtv);
+
+        //切換新舊版登入
+        LoginSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                myacc.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                myacc.setHint("e-mail");
+            }
+            else{
+                myacc.setInputType(InputType.TYPE_CLASS_NUMBER);
+                myacc.setHint("手機/電話號碼");
+            }
+        });
 
         //註冊紐動作
         reg.setOnClickListener(v -> swreg());

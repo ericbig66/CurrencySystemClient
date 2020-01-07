@@ -262,7 +262,7 @@ public class NewRegister extends AppCompatActivity {
 //                if(no.isChecked()){
 //                    next.setEnabled(false);
 //                }
-                  answer.setHint(R.string.phone);
+                  answer.setHint("09xxxxxxxx");
                   question.setText(R.string.phone);
                 TextHandler();
                 break;
@@ -344,7 +344,11 @@ public class NewRegister extends AppCompatActivity {
 //                }
                     if(answer.getText().toString().trim().isEmpty()){
                         Toast.makeText(NewRegister.this,R.string.phoneAlert,Toast.LENGTH_SHORT).show();
-                    }else{nextQ(answer.getText().toString());}
+                    }
+                    else if(answer.getText().toString().trim().length()<9){
+                        Toast.makeText(NewRegister.this,"您的電話或手機號碼格式不正確!",Toast.LENGTH_SHORT).show();
+                    }
+                    else{nextQ(answer.getText().toString());}
                 break;
 
             case 5:
