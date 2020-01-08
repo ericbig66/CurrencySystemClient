@@ -64,6 +64,7 @@ public class MainMenu extends AppCompatActivity {
     public static ArrayList<String> attended = new ArrayList<>();
 
     public static int  EventId=-1;
+    public static boolean entryIsRecent = false;
     //
 
     public void execute(View v){
@@ -88,6 +89,9 @@ public class MainMenu extends AppCompatActivity {
                 break;
             case R.id.contact:
                 intent = new Intent(MainMenu.this, contactUS.class);
+                break;
+            case R.id.recent:
+                intent = new Intent(MainMenu.this, RecentAttendEvent.class);
                 break;
         }
         startActivity(intent);
@@ -173,9 +177,9 @@ public class MainMenu extends AppCompatActivity {
 
 
             wmsg.setText(result);
-            Log.v("test","market = "+findViewById(R.id.market).getHeight());
-            Log.v("test","getcoin = "+findViewById(R.id.getcoin).getHeight());
-            Log.v("test","diary = "+findViewById(R.id.diary).getHeight());
+//            Log.v("test","market = "+findViewById(R.id.market).getHeight());
+//            Log.v("test","getcoin = "+findViewById(R.id.getcoin).getHeight());
+//            Log.v("test","diary = "+findViewById(R.id.diary).getHeight());
 }
     }
 

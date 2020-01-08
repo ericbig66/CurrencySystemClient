@@ -26,5 +26,6 @@ public class newDiary extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(newDiary.this, MainMenu.class);
         startActivity(intent);
+        finish();
     }
 }

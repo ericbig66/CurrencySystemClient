@@ -43,6 +43,7 @@ import static com.greeting.mysqlconnecter.MainMenu.Areward;
 import static com.greeting.mysqlconnecter.MainMenu.Avendor;
 import static com.greeting.mysqlconnecter.MainMenu.EventId;
 import static com.greeting.mysqlconnecter.MainMenu.attended;
+import static com.greeting.mysqlconnecter.MainMenu.entryIsRecent;
 
 
 public class EventDetail extends AppCompatActivity {
@@ -147,7 +148,13 @@ public class EventDetail extends AppCompatActivity {
                 Toast.makeText(EventDetail.this, result, Toast.LENGTH_SHORT).show();
                 if(result.equals("報名成功")||result.equals("已取消報名")){
                     clear();
-                    Intent intent = new Intent(EventDetail.this, Event.class);
+                    Intent intent;
+                    if(entryIsRecent){
+                        intent = new Intent(EventDetail.this, RecentAttendEvent.class);
+                    }else{
+                        intent = new Intent(EventDetail.this, Event.class);
+                    }
+                    entryIsRecent = false;
                     startActivity(intent);
                     finish();
                 }

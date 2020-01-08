@@ -55,6 +55,7 @@ public class RedEnvelopeDiary extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_diary, container, false);
 
         tradeData = view.findViewById(R.id.tradeData);
+        clear();
         ioacc.add("對方帳戶　　");
         trade.add("交易方向　　");
         amount.add("金額　　");
@@ -122,7 +123,7 @@ public class RedEnvelopeDiary extends Fragment {
                 //設定TextView的文字
                 t1.setText(ioacc.get(row));
                 t2.setText(trade.get(row));
-                Log.v("test",trade.get(row));
+//                Log.v("test",trade.get(row));
                 t3.setText(amount.get(row));
                 t4.setText(remain.get(row));
                 //將TextView放入列
@@ -136,6 +137,13 @@ public class RedEnvelopeDiary extends Fragment {
             }
 
         }
+    }
+
+    public void clear(){
+        ioacc.clear();
+        trade.clear();
+        amount.clear();
+        remain.clear();
     }
 
 }

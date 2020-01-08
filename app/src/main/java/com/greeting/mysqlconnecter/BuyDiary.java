@@ -4,6 +4,7 @@ package com.greeting.mysqlconnecter;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import static com.greeting.mysqlconnecter.Login.acc;
 import static com.greeting.mysqlconnecter.Login.pass;
 import static com.greeting.mysqlconnecter.Login.url;
 import static com.greeting.mysqlconnecter.Login.user;
@@ -34,8 +36,8 @@ public class BuyDiary extends Fragment {
     private ArrayList<String> total = new ArrayList<>();
     private ArrayList<String> selldate = new ArrayList<>();
 
-    String acc;
-    TextView dt;
+
+//    TextView dt;
     TableLayout tradeData;
 
     public BuyDiary() {
@@ -54,6 +56,7 @@ public class BuyDiary extends Fragment {
         //return textView;
         View view = inflater.inflate(R.layout.fragment_new_diary,container, false);
         tradeData = view.findViewById(R.id.tradeData);
+        clear();
         pname.add("品名　　");
         pprice.add("單價　　");
         pamount.add("數量　　");
@@ -64,10 +67,7 @@ public class BuyDiary extends Fragment {
         return view;
     }
 
-    public void onBackPressed(){
-        Intent intent = new Intent(getActivity(), MainMenu.class);
-        startActivity(intent);
-    }
+
 
     //建立連接與查詢非同步作業
     private class ConnectMySql extends AsyncTask<String, Void, String> {
@@ -88,6 +88,7 @@ public class BuyDiary extends Fragment {
                 //建立查詢
                 //String result = "對方帳戶\t交易\t金額\t餘額\n";
                 Statement st = con.createStatement();
+                Log.v("test","select productName, price, amount, sellDate from sellhistory where client ='"+acc+"'");
                 ResultSet rs = st.executeQuery("select productName, price, amount, sellDate from sellhistory where client ='"+acc+"'");
                 //將查詢結果裝入陣列
                 while(rs.next()){
@@ -144,4 +145,11 @@ public class BuyDiary extends Fragment {
         }
     }
 
+    public void clear(){
+        pname.clear();
+        pprice.clear();
+        pamount.clear();
+        total.clear();
+        selldate.clear();
+    }
 }

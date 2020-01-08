@@ -38,7 +38,7 @@ import static android.app.PendingIntent.getActivity;
 public class Login extends AppCompatActivity {
     //render bug resolver
     public static int rc = 0;
-    final float VERSION = 0.3f;
+    final float VERSION = 0.5f;
     //連接資料庫的IP、帳號(不可用root)、密碼
     public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     public static final String user = "currency";
@@ -223,7 +223,7 @@ public class Login extends AppCompatActivity {
                 data = result;
                 acc=account;
 //                Toast.makeText(Login.this, "請稍後", Toast.LENGTH_SHORT).show();
-                Log.v("test",result);
+//                Log.v("test",result);
                 swmenu();
             }
 
@@ -280,7 +280,7 @@ public class Login extends AppCompatActivity {
                 if(VERSION<ver){
                     updateAlert();
                 }else{
-                    Log.v("test", "no new update detected!!");
+//                    Log.v("test", "no new update detected!!");
                 }
             }catch(Exception e){
                 Log.v("test", "version check error = " + e.toString());

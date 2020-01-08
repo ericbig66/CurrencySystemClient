@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.greeting.mysqlconnecter.BuyDiary;
+import com.greeting.mysqlconnecter.EventAttendRecord;
 import com.greeting.mysqlconnecter.R;
 import com.greeting.mysqlconnecter.RedEnvelopeDiary;
 
@@ -19,7 +20,7 @@ import com.greeting.mysqlconnecter.RedEnvelopeDiary;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.buy, R.string.redEnvelope};
+    private static final int[] TAB_TITLES = new int[]{R.string.buy, R.string.redEnvelope, R.string.attRecord};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -37,6 +38,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return BuyDiary.newInstance();
             case 1:
                 return RedEnvelopeDiary.newInstance();
+            case 2:
+                return EventAttendRecord.newInstance();
             default:
                 return null;
         }
@@ -51,6 +54,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 3;
     }
 }

@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".contactUS"></activity>
+        <activity android:name=".RecentAttendEvent"></activity>
+        <activity android:name=".contactUS" />
         <activity
             android:name=".newDiary"
             android:label="@string/title_activity_new_diary"

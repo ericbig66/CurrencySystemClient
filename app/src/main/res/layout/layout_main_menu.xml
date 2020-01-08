@@ -52,11 +52,22 @@
                 android:textSize="20sp" />
 
             <Button
+                android:id="@+id/recent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/rounded_button_pink"
+                android:minWidth="50dp"
+                android:onClick="execute"
+                android:text="近期\n報名" />
+
+            <Button
                 android:id="@+id/contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:background="@drawable/rounded_button_pink"
+                android:minWidth="50dp"
                 android:onClick="execute"
                 android:text="聯絡\n我們" />
         </LinearLayout>
