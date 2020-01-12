@@ -43,6 +43,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="update">下載更新</string>
     <string name="leave">離開系統</string>
-    <string name="attRecord">活動報名及簽到記錄</string>
+    <string name="attRecord">活動報名\n及簽到記錄</string>
 
 </resources>

@@ -92,7 +92,7 @@ public class EventAttendRecord extends Fragment {
                 //建立查詢
                 //String result = "對方帳戶\t交易\t金額\t餘額\n";
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select  actID, activityName, action,  actTime from activity_record left join activity on actID = activityNumber where account = 'dillan210168@gmail.com'");
+                ResultSet rs = st.executeQuery("select  actID, activityName, action,  actTime from activity_record left join activity on actID = activityNumber where account = '"+acc+"'");
                 //將查詢結果裝入陣列
                 while(rs.next()){
                     Aid.add(rs.getString("actID"));

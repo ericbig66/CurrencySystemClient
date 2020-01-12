@@ -284,6 +284,12 @@ public class Purchase extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+            else if(result.contains("成功")){
+                Toast.makeText(Purchase.this,result,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Purchase.this,MainMenu.class);
+                startActivity(intent);
+                finish();
+            }
             else{
                 Toast.makeText(Purchase.this,result,Toast.LENGTH_LONG).show();
             }

@@ -38,7 +38,8 @@ import static android.app.PendingIntent.getActivity;
 public class Login extends AppCompatActivity {
     //render bug resolver
     public static int rc = 0;
-    final float VERSION = 0.5f;
+    final float VERSION = 0.7f;
+    float newver;
     //連接資料庫的IP、帳號(不可用root)、密碼
     public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
     public static final String user = "currency";
@@ -88,10 +89,12 @@ public class Login extends AppCompatActivity {
             if(isChecked){
                 myacc.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 myacc.setHint("e-mail");
+                LoginSwitch.setText("e-mail登入");
             }
             else{
                 myacc.setInputType(InputType.TYPE_CLASS_NUMBER);
                 myacc.setHint("手機/電話號碼");
+                LoginSwitch.setText("手機/電話號碼登入");
             }
         });
 
@@ -126,7 +129,7 @@ public class Login extends AppCompatActivity {
         //建立更新資訊提示
         AlertDialog.Builder newver = new AlertDialog.Builder(this);
         newver.setTitle("請更新至最新版");
-        newver.setMessage("為了您的帳戶安全，請點選下載更新以更新至最新\n若您無法更新或不會更新，您可以撥打0800 000 123 詢問客服人員");
+        newver.setMessage("為了您的帳戶安全，請點選下載更新以更新至最新(V"+newver+")\n若您無法更新或不會更新，您可以撥打0800 000 123 詢問客服人員");
         // Add the buttons
         newver.setPositiveButton(R.string.update, (dialog, id) -> {
             // User clicked OK button
@@ -278,6 +281,7 @@ public class Login extends AppCompatActivity {
             try {
                 ver = Float.parseFloat(result.trim());
                 if(VERSION<ver){
+                    newver = ver;
                     updateAlert();
                 }else{
 //                    Log.v("test", "no new update detected!!");
