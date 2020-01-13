@@ -38,7 +38,7 @@ import static android.app.PendingIntent.getActivity;
 public class Login extends AppCompatActivity {
     //render bug resolver
     public static int rc = 0;
-    final float VERSION = 0.7f;
+    final float VERSION = 0.8f;
     float newver;
     //連接資料庫的IP、帳號(不可用root)、密碼
     public static final String url = "jdbc:mysql://140.135.113.196:3360/virtualcurrencyproject";
